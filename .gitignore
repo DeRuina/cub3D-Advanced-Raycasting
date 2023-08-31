@@ -1,0 +1,5 @@
+.vscode
+.DS*
+obj
+cub3d
+a.out

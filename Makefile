@@ -14,7 +14,7 @@ AR			= ar
 ARFLAGS		= rcs
 
 SRC 		= \
-$S/main.c
+$S/main.c	$S/parse_map.c
 
 OBJ			= $(SRC:$S%=$O%.o)
 
@@ -57,6 +57,7 @@ re:
 	@make all
 
 run_test: $(LIBFT)
+	make CUB3D="$(SRC)" -C test
 
 
 debug: CFLAGS := $(filter-out -O3,$(CFLAGS))
