@@ -8,7 +8,7 @@ LIBFT_I		= libft/inc
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra
 INCLUDES	= -I$I -I$(LIBFT_I) -Iinclude
-LIBRARIES	= -L./libft -lft -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" -L./MLX42/build/ -lmlx42
+LIBRARIES	= -L./libft -lft -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" -L./build/ -lmlx42
 
 AR			= ar
 ARFLAGS		= rcs
@@ -39,6 +39,8 @@ $(OBJ): $O%.o: $S%
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(LIBFT) $(OBJ)
+	cmake -B build MLX42
+	cmake --build build -j4
 	$(CC) $(OBJ) $(LIBRARIES) -framework Cocoa -framework OpenGL -framework IOKit -o $(NAME)
 
 $(LIBFT):
