@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   mlx_colors.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/25 16:41:02 by tspoof            #+#    #+#             */
-/*   Updated: 2023/10/05 14:32:39 by tspoof           ###   ########.fr       */
+/*   Created: 2023/10/05 14:44:44 by tspoof            #+#    #+#             */
+/*   Updated: 2023/10/05 14:44:52 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef MLX_COLORS_H
+# define MLX_COLORS_H
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
+// 'Encodes' four individual bytes into an int.
+int	get_rgba(int r, int g, int b, int a);
 
-	i = 0;
-	while (s && s[i] != '\0')
-		i++;
-	return (i);
-}
+// Get the red channel.
+int	get_r(int rgba);
+
+// Get the green channel.
+int	get_g(int rgba);
+
+// Get the blue channel.
+int	get_b(int rgba);
+
+// Get the alpha channel.
+int	get_a(int rgba);
+
+#endif

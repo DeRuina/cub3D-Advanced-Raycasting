@@ -7,14 +7,14 @@ LIBFT_I		= libft/inc
 
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra
-INCLUDES	= -I$I -I$(LIBFT_I) -Iinclude
+INCLUDES	= -I$I -I$(LIBFT_I) -Iinclude -I./MLX42/include
 LIBRARIES	= -L./libft -lft -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" -L./build/ -lmlx42
 
 AR			= ar
 ARFLAGS		= rcs
 
 SRC 		= \
-$S/main.c	$S/parse_map.c
+$S/main.c	$S/parse_map.c	$S/mlx_colors.c
 
 OBJ			= $(SRC:$S%=$O%.o)
 

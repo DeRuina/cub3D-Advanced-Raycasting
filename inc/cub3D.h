@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/10/05 12:15:33 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/10/05 14:45:12 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "MLX42/MLX42.h"
 # include "libft.h"
+# include "mlx_colors.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
