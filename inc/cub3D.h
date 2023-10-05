@@ -3,37 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/10/03 16:04:05 by druina           ###   ########.fr       */
+/*   Updated: 2023/10/05 12:15:33 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include "MLX42/MLX42.h"
 # include "libft.h"
-# include "mlx42.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
 
 typedef struct s_textures
 {
-	mlx_texture_t *no;
-	mlx_texture_t *so;
-	mlx_texture_t *we;
-	mlx_texture_t *ea;
-} t_textures;
+	xpm_t		*no;
+	xpm_t		*so;
+	xpm_t		*we;
+	xpm_t		*ea;
+}				t_textures;
 
-typedef struct	s_map
+typedef struct s_map
 {
-	int	floor_color;
-	int	cealing_color;
-	t_textures textures;
+	int			floor_color;
+	int			cealing_color;
+	t_textures	textures;
 }				t_map;
 
-int	parse_map(char *path);
+int				parse_map(char *path, t_map *map);
 
 #endif
