@@ -13,8 +13,10 @@ LIBRARIES	= -L./libft -lft -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" -L./bui
 AR			= ar
 ARFLAGS		= rcs
 
+# SRC 		= \
+# $S/main.c	$S/parse_map.c	$S/mlx_colors.c
 SRC 		= \
-$S/main.c	$S/parse_map.c	$S/mlx_colors.c
+# $S/main.c	$S/parse_map.c	$S/mlx_colors.c
 
 OBJ			= $(SRC:$S%=$O%.o)
 

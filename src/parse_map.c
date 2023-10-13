@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 14:31:07 by tspoof            #+#    #+#             */
-/*   Updated: 2023/10/05 15:42:10 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/10/13 16:44:01 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static xpm_t	*get_texture(char *line)
 	char	*tmp;
 	xpm_t	*result;
 
-	tmp = ft_strtrim(line, " \t");
+	tmp = ft_strtrim(line, " \t\n");
 	if (!tmp)
 		return (NULL);
 	result = mlx_load_xpm42(tmp);
@@ -75,27 +75,27 @@ static int	get_color(char *line)
 	return (get_rgba(rgb[0], rgb[1], rgb[2], 1));
 }
 
-int	parse_factory(char *line, t_map *map)
+int	parse_factory(char **line, t_map *map)
 {
 	char	*tmp;
 
-	tmp = ft_strtrim(line, " \t");
+	tmp = ft_strtrim(*line, " \t");
 	if (!tmp)
 		return (1);
-	free(line);
-	line = tmp;
-	if (!ft_strncmp(line, "SO", 2))
-		map->textures.so = get_texture(line + 2);
-	if (line[0] == 'N')
-		map->textures.no = get_texture(line + 2);
-	if (line[0] == 'W')
-		map->textures.we = get_texture(line + 2);
-	if (line[0] == 'E')
-		map->textures.ea = get_texture(line + 2);
-	if (line[0] == 'F')
-		map->floor_color = get_color(line);
-	if (line[0] == 'C')
-		map->cealing_color = get_color(line);
+	free(*line);
+	*line = tmp;
+	if (!ft_strncmp(*line, "SO ", 3))
+		map->textures.so = get_texture(*line + 2);
+	if (!ft_strncmp(*line, "NO ", 3))
+		map->textures.no = get_texture(*line + 2);
+	if (!ft_strncmp(*line, "WE ", 3))
+		map->textures.we = get_texture(*line + 2);
+	if (!ft_strncmp(*line, "EA ", 3))
+		map->textures.ea = get_texture(*line + 2);
+	if (!ft_strncmp(*line, "F ", 2))
+		map->floor_color = get_color(*line);
+	if (!ft_strncmp(*line, "C ", 2))
+		map->cealing_color = get_color(*line);
 	return (0);
 	// checks which functions should be called
 }
@@ -111,7 +111,7 @@ int	parse_map(char *path, t_map *map)
 	line = NULL;
 	while ((line = get_next_line(fd)))
 	{
-		if (parse_factory(line, map))
+		if (parse_factory(&line, map))
 		{
 			free(line);
 			return (1);

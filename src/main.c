@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:02:10 by druina            #+#    #+#             */
-/*   Updated: 2023/10/05 15:36:28 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/10/13 16:23:04 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ int	main(int argc, char **argv)
 
 	(void)argc;
 	(void)argv;
+	// mlx_t* mlx =mlx_init(100, 100, "Test", true);
+	// if (!mlx)
+	// 	error();
+// (void)mlx;
 	parse_map("./test/maps/good/library.cub", &map);
 	// if (argc != 2)
 	 	//dt_error(0);
