@@ -1,13 +1,13 @@
-   WE                            textures/wolfenstein/grey_stone.xpm
-NO      textures/wolfenstein/purple_stone.xpm
+   WE                            textures/test/WE.png
+NO      textures/test/NO.png
 
 
 
-SO textures/wolfenstein/red_brick.xpm
+SO textures/test/SO.png
 
 F      17,    38,     64
 
-EA textures/wolfenstein/wood.xpm
+EA textures/test/EA.png
 
 
 
