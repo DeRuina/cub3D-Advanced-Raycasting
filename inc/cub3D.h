@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/10/05 14:45:12 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/10/23 12:52:22 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,24 @@
 # include <math.h>
 # include <stdio.h>
 
+
+typedef enum e_error
+{
+	MALLOC_FAIL,
+	WRONG_AMOUNT,
+	FILE_TYPE,
+	FILE_OPEN,
+	INVALID_MAP,
+	INVALID_COLOR,
+	INVALID_TEXTURE
+} t_error;
+
 typedef struct s_textures
 {
-	xpm_t		*no;
-	xpm_t		*so;
-	xpm_t		*we;
-	xpm_t		*ea;
+	mlx_texture_t		*no;
+	mlx_texture_t		*so;
+	mlx_texture_t		*we;
+	mlx_texture_t		*ea;
 }				t_textures;
 
 typedef struct s_map
