@@ -16,7 +16,7 @@ ARFLAGS		= rcs
 # SRC 		= \
 # $S/main.c	$S/parse_map.c	$S/mlx_colors.c
 SRC 		= \
-$S/main.c	$S/parse_map.c	$S/mlx_colors.c
+$S/main.c	$S/parse_map.c	$S/mlx_colors.c	$S/utils.c
 
 OBJ			= $(SRC:$S%=$O%.o)
 

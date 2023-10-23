@@ -6,31 +6,11 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 14:31:07 by tspoof            #+#    #+#             */
-/*   Updated: 2023/10/23 12:52:22 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/10/23 16:43:14 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	dt_strerror(err_no)
-{
-	static char	*dt_errors[MLX_ERRMAX] = {
-		"Error: malloc failed\n",
-		"Error: Wrong amount of arguments\n",
-		"Error: Wrong file type\n",
-		"Error: File openning failed\n",
-		"Error: Invalid map\n",
-		"Error: Invalid color\n",
-		"Error: Invalid texture\n"
-	};
-	ft_putstr_fd(dt_errors[err_no], 2);
-}
-
-static void	dt_error(int err_no)
-{
-	dt_strerror(err_no);
-	exit(EXIT_FAILURE);
-}
 
 static void	mlx_error(void)
 {
@@ -94,7 +74,7 @@ static int	get_color(char *line)
 }
 
 // checks which functions should be called
-static void	parse_factory(char **line, t_map *map)
+static int	parse_factory(char **line, t_map *map)
 {
 	char	*tmp;
 
@@ -104,31 +84,84 @@ static void	parse_factory(char **line, t_map *map)
 	free(*line);
 	*line = tmp;
 	if (!ft_strncmp(*line, "SO ", 3))
-		map->textures.so = get_texture(*line + 2);
+		return(map->textures.so = get_texture(*line + 2), 42);
 	if (!ft_strncmp(*line, "NO ", 3))
-		map->textures.no = get_texture(*line + 2);
+		return(map->textures.no = get_texture(*line + 2), 42);
 	if (!ft_strncmp(*line, "WE ", 3))
-		map->textures.we = get_texture(*line + 2);
+		return(map->textures.we = get_texture(*line + 2), 42);
 	if (!ft_strncmp(*line, "EA ", 3))
-		map->textures.ea = get_texture(*line + 2);
+		return(map->textures.ea = get_texture(*line + 2), 42);
 	if (!ft_strncmp(*line, "F ", 2))
-		map->floor_color = get_color(*line + 1);
+		return(map->floor_color = get_color(*line + 1), 42);
 	if (!ft_strncmp(*line, "C ", 2))
-		map->cealing_color = get_color(*line + 1);
+		return(map->cealing_color = get_color(*line + 1), 42);
+	if (**line == '\n')
+		return (42);
+	dt_error(INVALID_MAP);
+	return (42);
 }
 
-// ceiling and floor colour 0 is acceptable
 
-
-void check_map_values(t_map *map)
+int valid_colors(t_map *map)
 {
 	if (map->cealing_color < 0 || map->floor_color < 0)
-		dt_error(INVALID_COLOR);
-	if (!map->textures.no || !map->textures.we || !map->textures.ea
-		 || !map->textures.so)
-		 	dt_error(INVALID_TEXTURE);
+		return (0);
+	return (1);
 }
 
+int valid_textures(t_map *map)
+{
+	if (!map->textures.no || !map->textures.we || !map->textures.ea
+		 || !map->textures.so)
+		 	return (0);
+	return (1);
+}
+
+int	valid_map_chars(char *line)
+{
+	while (line && *line)
+	{
+		if (*line != ' '
+			&& *line != '0'
+			&& *line != '1'
+			&& *line != 'S'
+			&& *line != 'N'
+			&& *line != 'E'
+			&& *line != 'W'
+			&& *line != '\n')
+			return (0);
+		line++;
+	}
+	return (1);
+}
+
+void	store_map(char *line, t_map *map)
+{
+	char *tmp;
+
+	if (!valid_map_chars(line))
+		dt_error(INVALID_MAP);
+	tmp = ft_strtrim(line, " \t");
+	if (tmp && tmp[0] == '\n')
+	{
+		// if (map->map->len != 0) // breaks the thing if there is a /n at the end
+		// 	dt_error(INVALID_MAP);
+		return;
+	}
+
+	free(tmp);
+	if (vec_push(map->map, &line) < 0)
+		dt_error(MALLOC_FAIL);
+	size_t i = 0;
+	char **str = (char **)map->map->memory;
+	while (i < map->map->len)
+	{
+		printf("%s\n", str[i]);
+		i++;
+	}
+}
+
+// what happens if we have duplicates
 int	parse_map(char *path, t_map *map)
 {
 	int		fd;
@@ -140,11 +173,21 @@ int	parse_map(char *path, t_map *map)
 	line = NULL;
 	while ((line = get_next_line(fd)))
 	{
-		parse_factory(&line, map);
+		(void)parse_factory(&line, map);
+		free(line);
+		line = NULL;
+		if (valid_colors(map) && valid_textures(map))
+			break;
+	}
+	while ((line = get_next_line(fd)))
+	{
+		// skip till the map starts
+		store_map(line, map);
 		free(line);
 		line = NULL;
 	}
-	check_map_values(map);
+	// check_map_values(map);
+	// new open and loop
 	close(fd);
 	return (0);
 }

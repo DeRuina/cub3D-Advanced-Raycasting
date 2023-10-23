@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/10/23 12:52:22 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/10/23 15:20:39 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ typedef struct s_map
 	int			floor_color;
 	int			cealing_color;
 	t_textures	textures;
+	t_vec		*map;
 }				t_map;
 
 int				parse_map(char *path, t_map *map);
+void			dt_error(int err_no);
 
 #endif
