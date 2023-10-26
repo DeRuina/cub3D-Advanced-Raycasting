@@ -74,7 +74,7 @@ static int	get_color(char *line)
 }
 
 // checks which functions should be called
-static int	parse_factory(char **line, t_map *map)
+static int	call_appropriate_func(char **line, t_map *map)
 {
 	char	*tmp;
 
@@ -173,7 +173,7 @@ int	parse_map(char *path, t_map *map)
 	line = NULL;
 	while ((line = get_next_line(fd)))
 	{
-		(void)parse_factory(&line, map);
+		(void)call_appropriate_func(&line, map);
 		free(line);
 		line = NULL;
 		if (valid_colors(map) && valid_textures(map))
