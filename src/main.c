@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:02:10 by druina            #+#    #+#             */
-/*   Updated: 2023/10/23 16:43:18 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/10/30 14:56:22 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int	main(int argc, char **argv)
 	// 	error();
 // (void)mlx;
 	parse_map("./test/maps/good/creepy.cub", &map);
-	int tmp = get_r(map.cealing_color);
-	tmp = get_g(map.cealing_color);
-	tmp = get_b(map.cealing_color);
-	// if (argc != 2)
+	// int tmp = get_r(map.cealing_color);
+	// tmp = get_g(map.cealing_color);
+	// tmp = get_b(map.cealing_color);
+	// // if (argc != 2)
 	 	// dt_error(WRONG_AMOUNT);
 	// if (ft_strlen(ft_strnstr(argv[1], ".cub", ft_strlen(argv[1]))) != 4 && ft_strlen(argv[1]) > 4)
 	// dt_error(FILE_TYPE);

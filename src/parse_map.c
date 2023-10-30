@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 14:31:07 by tspoof            #+#    #+#             */
-/*   Updated: 2023/10/23 16:43:14 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/10/30 14:56:22 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	get_color(char *line)
 }
 
 // checks which functions should be called
-static int	call_appropriate_func(char **line, t_map *map)
+static int	store_map_params(char **line, t_map *map)
 {
 	char	*tmp;
 
@@ -152,13 +152,48 @@ void	store_map(char *line, t_map *map)
 	free(tmp);
 	if (vec_push(map->map, &line) < 0)
 		dt_error(MALLOC_FAIL);
-	size_t i = 0;
-	char **str = (char **)map->map->memory;
+	// size_t i = 0;
+	// char **str = (char **)map->map->memory;
+	// while (i < map->map->len)
+	// {
+	// 	printf("%s\n", str[i]);
+	// 	i++;
+	// }
+}
+
+int check_map(t_map *map)
+{
+	int player_count;
+	size_t i;
+	size_t j;
+	char **rows;
+
+	player_count = 0;
+	i = 0;
+	rows = (char **)map->map->memory;
 	while (i < map->map->len)
 	{
-		printf("%s\n", str[i]);
+
+		j = 0;
+		while (rows[i][j])
+		{
+			if (rows[i][j] == '0') //or player
+			{
+				if (i > 0 && rows[i - 1][j] != '1' || rows[i - 1][j] != '0') // or player
+					dt_error(INVALID_MAP);
+				if (j < strlen(rows[i]) && rows[i][j + 1] != '1' || rows[i - 1][j] != '0') // or player
+					dt_error(INVALID_MAP);
+				if (i < map->map->len && rows[i + 1][j] != '1' || rows[i - 1][j] != '0') // or player
+					dt_error(INVALID_MAP);
+				if (j > 0  && rows[i][j - 1] != '1' || rows[i - 1][j] != '0') // or player
+					dt_error(INVALID_MAP);
+			}
+
+			j++;
+		}
 		i++;
 	}
+	return (0);
 }
 
 // what happens if we have duplicates
@@ -173,7 +208,7 @@ int	parse_map(char *path, t_map *map)
 	line = NULL;
 	while ((line = get_next_line(fd)))
 	{
-		(void)call_appropriate_func(&line, map);
+		(void)store_map_params(&line, map);
 		free(line);
 		line = NULL;
 		if (valid_colors(map) && valid_textures(map))
@@ -186,7 +221,7 @@ int	parse_map(char *path, t_map *map)
 		free(line);
 		line = NULL;
 	}
-	// check_map_values(map);
+	// check_map(t_map *map);
 	// new open and loop
 	close(fd);
 	return (0);
