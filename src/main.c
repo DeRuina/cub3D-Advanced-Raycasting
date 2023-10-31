@@ -6,7 +6,7 @@
 /*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:02:10 by druina            #+#    #+#             */
-/*   Updated: 2023/10/30 14:56:22 by druina           ###   ########.fr       */
+/*   Updated: 2023/10/31 17:23:14 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	init_map(t_map *map)
 
 static void	destroy_map(t_map *map)
 {
+	// free map rows
 	vec_free(map->map);
 	free(map->map);
 }

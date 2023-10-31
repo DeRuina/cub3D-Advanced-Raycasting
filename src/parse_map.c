@@ -6,7 +6,7 @@
 /*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 14:31:07 by tspoof            #+#    #+#             */
-/*   Updated: 2023/10/31 16:55:03 by druina           ###   ########.fr       */
+/*   Updated: 2023/10/31 17:18:45 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,23 @@ int check_map(t_map *map)
 		j = 0;
 		while (rows[i] && rows[i][j])
 		{
+			if (is_player(rows[i][j]))
+			{
+				player_count++;
+				if (player_count > 1)
+					dt_error(INVALID_MAP);
+			}
 			if (rows[i][j] == '0' || is_player(rows[i][j]))
 			{
 				if (is_edge(j, ft_strlen(rows[i]), i, map->map->len))
 					dt_error(INVALID_MAP);
-				if (rows[i - 1][j] != '1' || rows[i - 1][j] != '0' || is_player(rows[i][j]))
+				if (rows[i - 1][j] != '1' && rows[i - 1][j] != '0' && !is_player(rows[i - 1][j]))
 					dt_error(INVALID_MAP);
-				if (rows[i][j + 1] != '1' || rows[i - 1][j] != '0' || is_player(rows[i][j]))
+				if (rows[i + 1][j] != '1' && rows[i + 1][j] != '0' && !is_player(rows[i + 1][j]))
 					dt_error(INVALID_MAP);
-				if (rows[i + 1][j] != '1' || rows[i - 1][j] != '0'|| is_player(rows[i][j]))
+				if (rows[i][j + 1] != '1' && rows[i][j + 1] != '0' && !is_player(rows[i][j + 1]))
 					dt_error(INVALID_MAP);
-				if (rows[i][j - 1] != '1' || rows[i - 1][j] != '0'|| is_player(rows[i][j]))
+				if (rows[i][j - 1] != '1' && rows[i][j - 1] != '0'&& !is_player(rows[i][j - 1]))
 					dt_error(INVALID_MAP);
 			}
 
@@ -111,12 +117,16 @@ int	parse_map(char *path, t_map *map)
 	while ((line = get_next_line(fd)))
 	{
 		store_map(line, map);
-		char **str = (char **)map->map->memory;
-
-		free(line);
+		// free(line);
 		line = NULL;
-		(void)str;
 	}
+	char **str  = (char **)map->map->memory;
+	size_t i = 0;
+	while (i < map->map->len)
+	{
+		printf("%s", str[i]);
+		i++;
+	};
 	(void)check_map(map);
 	// new open and loop
 	close(fd);

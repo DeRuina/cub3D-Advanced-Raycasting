@@ -6,7 +6,7 @@
 /*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:55:42 by druina            #+#    #+#             */
-/*   Updated: 2023/10/31 16:55:58 by druina           ###   ########.fr       */
+/*   Updated: 2023/10/31 17:20:43 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,10 @@ void	store_map(char *line, t_map *map)
 	tmp = ft_strtrim(line, " \t");
 	if (tmp && tmp[0] == '\n')
 	{
-		// if (map->map->len != 0) // breaks the thing if there is a /n at the end
-		// 	dt_error(INVALID_MAP);
+		free(tmp);
 		return;
 	}
 	free(tmp);
 	if (vec_push(map->map, &line) < 0)
 		dt_error(MALLOC_FAIL);
-	size_t i = 0;
-	char **str = (char **)map->map->memory;
-	while (i < map->map->len)
-	{
-		printf("%s\n", str[i]);
-		i++;
-	}
 }
