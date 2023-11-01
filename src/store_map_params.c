@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   store_map_params.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:55:56 by druina            #+#    #+#             */
-/*   Updated: 2023/10/31 16:55:57 by druina           ###   ########.fr       */
+/*   Updated: 2023/11/01 15:00:47 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static int	get_color(char *line)
 	char	**tmp;
 	int		i;
 	int		rgb[3];
+	int		result;
 
 	i = 0;
 	tmp = ft_split(line, ',');
@@ -70,8 +71,9 @@ static int	get_color(char *line)
 	}
 	if (i < 3) // if there is less colors
 		dt_error(INVALID_COLOR);
+	result = get_rgba(rgb[0], rgb[1], rgb[2], 1);
 	free_2d(tmp);
-	return (get_rgba(rgb[0], rgb[1], rgb[2], 1));
+	return (result);
 }
 
 // checks which functions should be called

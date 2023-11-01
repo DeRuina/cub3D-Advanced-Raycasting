@@ -1,7 +1,8 @@
 T = ./tests/
 
 FLAGS = -Wall -Werror -Wextra -g
-INCLUDES = -I../inc -I../libft/inc -I./unity -I./inc
+INCLUDES = -I../inc -I../libft/inc -I./unity -I./inc -I../MLX42/include
+LIBRARIES	= -L../libft -lft -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" -L../build/ -lmlx42
 # SANITIZE = -fsanitize=address,undefined
 TEST = ./unity/unity.c ./test.c
 TESTS = \
@@ -12,8 +13,7 @@ PS := $(filter-out %main.c, $(CUB3D))
 all: clean run_test
 
 run_test:
-	g++ -c $T/test_fixer.cpp -o cpp.o
-	gcc $(FLAGS) $(INCLUDES) $(SANITIZE) $(TEST) $(TESTS) $(PS:%=../%) -L../libft -lft cpp.o -o run_tests
+	gcc $(FLAGS) $(INCLUDES) $(SANITIZE) $(TEST) $(TESTS) $(PS:%=../%) $(LIBRARIES) -o run_tests
 	./run_tests
 
 clean:

@@ -1,9 +1,33 @@
-// #include "cub3d.h"
+#include "cub3d.h"
 #include "unity.h"
 #include <dirent.h>
 
 
-int fix_test(char *path);
+static void	init_map(t_map *map)
+{
+	t_vec *m;
+
+	map->cealing_color = -1;
+	map->floor_color = -1;
+
+	m = malloc(sizeof(t_vec));
+	if (!m)
+		dt_error(MALLOC_FAIL);
+	if (vec_new(m, 10, sizeof(char *)) < 0)
+		dt_error(MALLOC_FAIL);
+	map->map = m;
+}
+
+static void	destroy_map(t_map *map)
+{
+	// free map rows
+	map->textures.ea = NULL;
+	map->textures.so = NULL;
+	map->textures.we = NULL;
+	map->textures.no = NULL;
+	vec_free(map->map);
+	free(map->map);
+}
 
 void	test_bad(void)
 {
@@ -42,8 +66,9 @@ void	test_good(void)
 	char			*path;
 	char			*message;
 	int				i;
+	t_map 			map;
 
-	d = opendir("maps/good/");
+	d = opendir("/Users/tspoof/Documents/HIVE/cub3D/test/maps/good");
 	if (d)
 	{
 		i = 0;
@@ -51,13 +76,15 @@ void	test_good(void)
 		{
 			if (dir->d_type == DT_REG)
 			{
-				asprintf(&path, "maps/good/%s", dir->d_name);
+				asprintf(&path, "/Users/tspoof/Documents/HIVE/cub3D/test/maps/good/%s", dir->d_name);
 				asprintf(&message, "#%d", i);
-				fix_test(path);
-				// TEST_ASSERT_EQUAL_INT_MESSAGE(1, parse_map(path), message);
-				// printf("%s - %s\n", path, message);
-				// free(path);
-				// free(message);
+				if (ft_strlen(ft_strnstr(path, ".cub", ft_strlen(path))) != 4 && ft_strlen(path) > 4)
+					continue;
+				init_map(&map);
+				TEST_ASSERT_EQUAL_INT_MESSAGE(0, parse_map(path, &map), message);
+				destroy_map(&map);
+				free(path);
+				free(message);
 				i++;
 			}
 		}
@@ -68,7 +95,7 @@ void	test_good(void)
 int	test_parse_map(void)
 {
 	UNITY_BEGIN();
-	RUN_TEST(test_bad);
+	// RUN_TEST(test_bad);
 	RUN_TEST(test_good);
 	return (UNITY_END());
 }

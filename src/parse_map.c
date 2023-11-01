@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 14:31:07 by tspoof            #+#    #+#             */
-/*   Updated: 2023/10/31 17:18:45 by druina           ###   ########.fr       */
+/*   Updated: 2023/11/01 15:02:13 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int valid_colors(t_map *map)
 {
-	if (map->cealing_color < 0 || map->floor_color < 0)
+	if (map->cealing_color == -1 || map->floor_color == -1)
 		return (0);
 	return (1);
 }
@@ -120,13 +120,6 @@ int	parse_map(char *path, t_map *map)
 		// free(line);
 		line = NULL;
 	}
-	char **str  = (char **)map->map->memory;
-	size_t i = 0;
-	while (i < map->map->len)
-	{
-		printf("%s", str[i]);
-		i++;
-	};
 	(void)check_map(map);
 	// new open and loop
 	close(fd);
