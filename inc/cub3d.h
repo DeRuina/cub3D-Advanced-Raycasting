@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/11/01 15:00:46 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/02 15:05:00 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@
 
 typedef enum e_error
 {
+	COORECT,
 	MALLOC_FAIL,
 	WRONG_AMOUNT,
 	FILE_TYPE,
 	FILE_OPEN,
 	INVALID_MAP,
 	INVALID_COLOR,
-	INVALID_TEXTURE
+	INVALID_TEXTURE,
+	NO_PLAYER
 } t_error;
 
 typedef struct s_textures

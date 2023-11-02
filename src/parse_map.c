@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 14:31:07 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/01 15:02:13 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/02 15:04:59 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ int check_map(t_map *map)
 		}
 		i++;
 	}
+	if (!player_count)
+		dt_error(NO_PLAYER);
 	return (0);
 }
 
@@ -121,7 +123,8 @@ int	parse_map(char *path, t_map *map)
 		line = NULL;
 	}
 	(void)check_map(map);
-	// new open and loop
+	if (!valid_colors(map) || !valid_textures(map) || !map->map->len)
+		dt_error(INVALID_MAP);
 	close(fd);
 	return (0);
 }

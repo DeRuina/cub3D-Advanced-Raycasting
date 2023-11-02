@@ -6,7 +6,7 @@
 /*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:02:10 by druina            #+#    #+#             */
-/*   Updated: 2023/10/31 17:23:14 by druina           ###   ########.fr       */
+/*   Updated: 2023/11/02 15:04:59 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int argc, char **argv)
 	// if (!mlx)
 	// 	error();
 // (void)mlx;
-	parse_map("./test/maps/good/creepy.cub", &map);
+	parse_map("./test/maps/bad/map_too_small.cub", &map);
 	// int tmp = get_r(map.cealing_color);
 	// tmp = get_g(map.cealing_color);
 	// tmp = get_b(map.cealing_color);

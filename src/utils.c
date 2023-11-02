@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 15:19:15 by tspoof            #+#    #+#             */
-/*   Updated: 2023/10/23 16:45:07 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/02 15:05:30 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 static void	dt_strerror(err_no)
 {
 	static char	*dt_errors[MLX_ERRMAX] = {
+		"EXIT SUCCESS\n",
 		"Error: malloc failed\n",
 		"Error: Wrong amount of arguments\n",
 		"Error: Wrong file type\n",
 		"Error: File openning failed\n",
 		"Error: Invalid map\n",
 		"Error: Invalid color\n",
-		"Error: Invalid texture\n"
+		"Error: Invalid texture\n",
+		"Error: No player\n"
 	};
 	ft_putstr_fd(dt_errors[err_no], 2);
 }

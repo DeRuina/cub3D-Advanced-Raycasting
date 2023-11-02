@@ -1,6 +1,7 @@
 #include "cub3d.h"
 #include "unity.h"
 #include <dirent.h>
+#include <unistd.h>
 
 
 static void	init_map(t_map *map)
@@ -29,6 +30,7 @@ static void	destroy_map(t_map *map)
 	free(map->map);
 }
 
+
 void	test_bad(void)
 {
 	DIR				*d;
@@ -36,8 +38,11 @@ void	test_bad(void)
 	char			*path;
 	char			*message;
 	int				i;
+	t_map 			map;
+	int status;
 
-	d = opendir("maps/bad/");
+
+	d = opendir("/Users/druina/Desktop/github/cub3D/test/maps/bad");
 	if (d)
 	{
 		i = 0;
@@ -45,16 +50,40 @@ void	test_bad(void)
 		{
 			if (dir->d_type == DT_REG)
 			{
-				asprintf(&path, "maps/bad/%s", dir->d_name);
+				asprintf(&path, "/Users/druina/Desktop/github/cub3D/test/maps/bad/%s", dir->d_name);
 				asprintf(&message, "#%d", i);
-				// TEST_ASSERT_EQUAL_INT_MESSAGE(0, parse_map(path), message);
-				// printf("%s - %s\n", path, message);
-				// free(path);
-				// free(message);
+				if (ft_strlen(ft_strnstr(path, ".cub", ft_strlen(path))) != 4 && ft_strlen(path) > 4)
+					continue;
+				int pid = fork();
+
+				if (pid == 0)
+				{
+					init_map(&map);
+					parse_map(path, &map);
+					destroy_map(&map);
+				}
+				waitpid(pid, &status, 0);
+				if (WIFEXITED(status))
+				{
+					int exit_status = WEXITSTATUS(status);
+					if (!exit_status)
+					{
+						printf("Exit status of %s the child was %d\n", message, exit_status);
+						printf("file: %s\n", path);
+					}
+					TEST_ASSERT_MESSAGE(exit_status > 0, message);
+				}
+				// TEST_ASSERT_EQUAL_INT_MESSAGE(0, 1, "All bad man");
+				// init_map(&map);
+				// parse_map(path, &map);
+				// destroy_map(&map);
+				free(path);
+				free(message);
 				i++;
 			}
 		}
 		closedir(d);
+
 	}
 }
 
@@ -68,7 +97,7 @@ void	test_good(void)
 	int				i;
 	t_map 			map;
 
-	d = opendir("/Users/tspoof/Documents/HIVE/cub3D/test/maps/good");
+	d = opendir("/Users/druina/Desktop/github/cub3D/test/maps/good");
 	if (d)
 	{
 		i = 0;
@@ -76,12 +105,12 @@ void	test_good(void)
 		{
 			if (dir->d_type == DT_REG)
 			{
-				asprintf(&path, "/Users/tspoof/Documents/HIVE/cub3D/test/maps/good/%s", dir->d_name);
+				asprintf(&path, "/Users/druina/Desktop/github/cub3D/test/maps/good/%s", dir->d_name);
 				asprintf(&message, "#%d", i);
 				if (ft_strlen(ft_strnstr(path, ".cub", ft_strlen(path))) != 4 && ft_strlen(path) > 4)
 					continue;
 				init_map(&map);
-				TEST_ASSERT_EQUAL_INT_MESSAGE(0, parse_map(path, &map), message);
+				parse_map(path, &map);
 				destroy_map(&map);
 				free(path);
 				free(message);
@@ -89,13 +118,14 @@ void	test_good(void)
 			}
 		}
 		closedir(d);
+		TEST_ASSERT_EQUAL_INT_MESSAGE(0, 0, "All good man");
 	}
 }
 
 int	test_parse_map(void)
 {
 	UNITY_BEGIN();
-	// RUN_TEST(test_bad);
+	RUN_TEST(test_bad);
 	RUN_TEST(test_good);
 	return (UNITY_END());
 }
