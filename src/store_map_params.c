@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   store_map_params.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:55:56 by druina            #+#    #+#             */
-/*   Updated: 2023/11/02 15:04:59 by druina           ###   ########.fr       */
+/*   Updated: 2023/11/03 16:01:18 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,20 +86,21 @@ int	store_map_params(char **line, t_map *map)
 		dt_error(MALLOC_FAIL);
 	free(*line);
 	*line = tmp;
-	if (!ft_strncmp(*line, "SO ", 3))
-		return(map->textures.so = get_texture(*line + 2), 42);
-	if (!ft_strncmp(*line, "NO ", 3))
-		return(map->textures.no = get_texture(*line + 2), 42);
-	if (!ft_strncmp(*line, "WE ", 3))
-		return(map->textures.we = get_texture(*line + 2), 42);
-	if (!ft_strncmp(*line, "EA ", 3))
-		return(map->textures.ea = get_texture(*line + 2), 42);
-	if (!ft_strncmp(*line, "F ", 2))
-		return(map->floor_color = get_color(*line + 1), 42);
-	if (!ft_strncmp(*line, "C ", 2))
-		return(map->cealing_color = get_color(*line + 1), 42);
-	if (**line == '\n')
-		return (42);
-	dt_error(INVALID_MAP);
-	return (42);
+	if (!ft_strncmp(*line, "SO ", 3) && !map->textures.so)
+		map->textures.so = get_texture(*line + 2);
+	else if (!ft_strncmp(*line, "NO ", 3) && !map->textures.no)
+		map->textures.no = get_texture(*line + 2);
+	else if (!ft_strncmp(*line, "WE ", 3) && !map->textures.we)
+		map->textures.we = get_texture(*line + 2);
+	else if (!ft_strncmp(*line, "EA ", 3) && !map->textures.ea)
+		map->textures.ea = get_texture(*line + 2);
+	else if (!ft_strncmp(*line, "F ", 2) && map->floor_color != -1)
+		map->floor_color = get_color(*line + 1);
+	else if (!ft_strncmp(*line, "C ", 2) && map->cealing_color != -1)
+		map->cealing_color = get_color(*line + 1);
+	else if (**line == '\n')
+		return (CORRECT);
+	else
+		dt_error(INVALID_MAP);
+	return (CORRECT);
 }

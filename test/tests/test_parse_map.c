@@ -42,7 +42,7 @@ void	test_bad(void)
 	int status;
 
 
-	d = opendir("/Users/druina/Desktop/github/cub3D/test/maps/bad");
+	d = opendir("/Users/tspoof/Documents/HIVE/cub3D/test/maps/bad");
 	if (d)
 	{
 		i = 0;
@@ -50,7 +50,7 @@ void	test_bad(void)
 		{
 			if (dir->d_type == DT_REG)
 			{
-				asprintf(&path, "/Users/druina/Desktop/github/cub3D/test/maps/bad/%s", dir->d_name);
+				asprintf(&path, "/Users/tspoof/Documents/HIVE/cub3D/test/maps/bad/%s", dir->d_name);
 				asprintf(&message, "#%d", i);
 				if (ft_strlen(ft_strnstr(path, ".cub", ft_strlen(path))) != 4 && ft_strlen(path) > 4)
 					continue;
@@ -73,10 +73,6 @@ void	test_bad(void)
 					}
 					TEST_ASSERT_MESSAGE(exit_status > 0, message);
 				}
-				// TEST_ASSERT_EQUAL_INT_MESSAGE(0, 1, "All bad man");
-				// init_map(&map);
-				// parse_map(path, &map);
-				// destroy_map(&map);
 				free(path);
 				free(message);
 				i++;
@@ -85,6 +81,7 @@ void	test_bad(void)
 		closedir(d);
 
 	}
+	TEST_ASSERT(1 < 0);
 }
 
 void	test_good(void)
@@ -97,7 +94,7 @@ void	test_good(void)
 	int				i;
 	t_map 			map;
 
-	d = opendir("/Users/druina/Desktop/github/cub3D/test/maps/good");
+	d = opendir("/Users/tspoof/Documents/HIVE/cub3D/test/maps/good");
 	if (d)
 	{
 		i = 0;
@@ -105,7 +102,7 @@ void	test_good(void)
 		{
 			if (dir->d_type == DT_REG)
 			{
-				asprintf(&path, "/Users/druina/Desktop/github/cub3D/test/maps/good/%s", dir->d_name);
+				asprintf(&path, "/Users/tspoof/Documents/HIVE/cub3D/test/maps/good/%s", dir->d_name);
 				asprintf(&message, "#%d", i);
 				if (ft_strlen(ft_strnstr(path, ".cub", ft_strlen(path))) != 4 && ft_strlen(path) > 4)
 					continue;
