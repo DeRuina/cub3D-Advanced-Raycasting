@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:02:10 by druina            #+#    #+#             */
-/*   Updated: 2023/11/06 15:18:00 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/06 15:32:44 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	destroy_map(t_map *map)
 	map_rows = (char **)map->map->memory;
 	// free_2d(map_rows); //custom free for vector stuff
 	i = 0;
-	while (i < map->map->len)
+	while (map->map->len && i < map->map->len)
 	{
 		free(map_rows[i]);
 		map_rows[i] = NULL;
@@ -59,6 +59,10 @@ static void	destroy_map(t_map *map)
 	vec_free(map->map);
 	free(map->map);
 }
+
+
+// TODO:
+// need to find a way to free the textures
 
 int	main(int argc, char **argv)
 {
@@ -85,6 +89,7 @@ int	main(int argc, char **argv)
 	// argc = 0;
 	// argv = NULL;
 	destroy_map(&map);
-	system("leaks cub3D");
+	// system("leaks cub3D");
 	return (0);
 }
+
