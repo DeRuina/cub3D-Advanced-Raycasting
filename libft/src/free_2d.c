@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_2d.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 09:58:35 by druina            #+#    #+#             */
-/*   Updated: 2023/05/03 14:54:33 by druina           ###   ########.fr       */
+/*   Updated: 2023/11/06 15:17:28 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	free_2d(char **str)
 	while (*str)
 	{
 		free(*str);
+		*str = NULL;
 		str++;
 	}
 	free(temp);

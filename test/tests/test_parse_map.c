@@ -10,6 +10,12 @@ static void	init_map(t_map *map)
 
 	map->cealing_color = -1;
 	map->floor_color = -1;
+	map->s_present.C = 0;
+	map->s_present.EA = 0;
+	map->s_present.F = 0;
+	map->s_present.NO = 0;
+	map->s_present.SO = 0;
+	map->s_present.WE = 0;
 
 	m = malloc(sizeof(t_vec));
 	if (!m)
@@ -21,11 +27,19 @@ static void	init_map(t_map *map)
 
 static void	destroy_map(t_map *map)
 {
+	char **map_rows;
+
 	// free map rows
+	free(map->textures.ea);
 	map->textures.ea = NULL;
+	free(map->textures.so);
 	map->textures.so = NULL;
+	free(map->textures.we);
 	map->textures.we = NULL;
+	free(map->textures.no);
 	map->textures.no = NULL;
+	map_rows = (char **)map->map->memory;
+	free_2d(map_rows);
 	vec_free(map->map);
 	free(map->map);
 }
@@ -81,7 +95,8 @@ void	test_bad(void)
 		closedir(d);
 
 	}
-	TEST_ASSERT(1 < 0);
+	else
+		TEST_ASSERT(1 < 0);
 }
 
 void	test_good(void)
@@ -117,6 +132,8 @@ void	test_good(void)
 		closedir(d);
 		TEST_ASSERT_EQUAL_INT_MESSAGE(0, 0, "All good man");
 	}
+	else
+		TEST_ASSERT(1 < 0);
 }
 
 int	test_parse_map(void)
@@ -124,5 +141,6 @@ int	test_parse_map(void)
 	UNITY_BEGIN();
 	RUN_TEST(test_bad);
 	RUN_TEST(test_good);
+	system("leaks run_tests");
 	return (UNITY_END());
 }

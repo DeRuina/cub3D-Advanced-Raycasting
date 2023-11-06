@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:55:56 by druina            #+#    #+#             */
-/*   Updated: 2023/11/03 16:01:18 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/06 15:17:28 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,14 @@ static int	get_color(char *line)
 	return (result);
 }
 
+int check_presence(int *item)
+{
+	if (*item > 0)
+		dt_error(INVALID_MAP);
+	*item = 1;
+	return (0);
+}
+
 // checks which functions should be called
 int	store_map_params(char **line, t_map *map)
 {
@@ -86,17 +94,17 @@ int	store_map_params(char **line, t_map *map)
 		dt_error(MALLOC_FAIL);
 	free(*line);
 	*line = tmp;
-	if (!ft_strncmp(*line, "SO ", 3) && !map->textures.so)
+	if (!ft_strncmp(*line, "SO ", 3) && !check_presence(&map->s_present.SO))
 		map->textures.so = get_texture(*line + 2);
-	else if (!ft_strncmp(*line, "NO ", 3) && !map->textures.no)
+	else if (!ft_strncmp(*line, "NO ", 3) && !check_presence(&map->s_present.NO))
 		map->textures.no = get_texture(*line + 2);
-	else if (!ft_strncmp(*line, "WE ", 3) && !map->textures.we)
+	else if (!ft_strncmp(*line, "WE ", 3) && !check_presence(&map->s_present.WE))
 		map->textures.we = get_texture(*line + 2);
-	else if (!ft_strncmp(*line, "EA ", 3) && !map->textures.ea)
+	else if (!ft_strncmp(*line, "EA ", 3) && !check_presence(&map->s_present.EA))
 		map->textures.ea = get_texture(*line + 2);
-	else if (!ft_strncmp(*line, "F ", 2) && map->floor_color != -1)
+	else if (!ft_strncmp(*line, "F ", 2) && !check_presence(&map->s_present.F))
 		map->floor_color = get_color(*line + 1);
-	else if (!ft_strncmp(*line, "C ", 2) && map->cealing_color != -1)
+	else if (!ft_strncmp(*line, "C ", 2) && !check_presence(&map->s_present.C))
 		map->cealing_color = get_color(*line + 1);
 	else if (**line == '\n')
 		return (CORRECT);

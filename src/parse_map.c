@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 14:31:07 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/02 15:04:59 by druina           ###   ########.fr       */
+/*   Updated: 2023/11/06 15:17:28 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,8 @@ int check_map(t_map *map)
 	player_count = 0;
 	i = 0;
 	rows = (char **)map->map->memory;
-	while (i < map->map->len)
+	while (map->map->len != 0 && i < map->map->len)
 	{
-
 		j = 0;
 		while (rows[i] && rows[i][j])
 		{
@@ -119,7 +118,7 @@ int	parse_map(char *path, t_map *map)
 	while ((line = get_next_line(fd)))
 	{
 		store_map(line, map);
-		// free(line);
+		free(line);
 		line = NULL;
 	}
 	(void)check_map(map);
