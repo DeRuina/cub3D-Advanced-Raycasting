@@ -28,18 +28,24 @@ static void	init_map(t_map *map)
 static void	destroy_map(t_map *map)
 {
 	char **map_rows;
+	size_t	i;
 
-	// free map rows
-	free(map->textures.ea);
-	map->textures.ea = NULL;
-	free(map->textures.so);
-	map->textures.so = NULL;
-	free(map->textures.we);
-	map->textures.we = NULL;
-	free(map->textures.no);
-	map->textures.no = NULL;
+	if (map->s_present.EA)
+		mlx_delete_texture(map->textures.ea);
+	if (map->s_present.SO)
+		mlx_delete_texture(map->textures.so);
+	if (map->s_present.WE)
+		mlx_delete_texture(map->textures.we);
+	if (map->s_present.NO)
+		mlx_delete_texture(map->textures.no);
 	map_rows = (char **)map->map->memory;
-	free_2d(map_rows);
+	i = 0;
+	while (map->map->len && i < map->map->len)
+	{
+		free(map_rows[i]);
+		map_rows[i] = NULL;
+		i++;
+	}
 	vec_free(map->map);
 	free(map->map);
 }
@@ -72,6 +78,7 @@ void	test_bad(void)
 
 				if (pid == 0)
 				{
+					printf("file: %s\n", path);
 					init_map(&map);
 					parse_map(path, &map);
 					destroy_map(&map);

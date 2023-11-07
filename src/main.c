@@ -6,31 +6,35 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:02:10 by druina            #+#    #+#             */
-/*   Updated: 2023/11/06 15:32:44 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/07 14:01:16 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	init_map(t_map *map)
+static void	destroy_map(t_map *map)
 {
-	t_vec *m;
+	char **map_rows;
+	size_t	i;
 
-	map->cealing_color = -1;
-	map->floor_color = -1;
-	map->s_present.C = 0;
-	map->s_present.EA = 0;
-	map->s_present.F = 0;
-	map->s_present.NO = 0;
-	map->s_present.SO = 0;
-	map->s_present.WE = 0;
-
-	m = malloc(sizeof(t_vec));
-	if (!m)
-		dt_error(MALLOC_FAIL);
-	if (vec_new(m, 10, sizeof(char *)) < 0)
-		dt_error(MALLOC_FAIL);
-	map->map = m;
+	if (map->s_present.EA)
+		mlx_delete_texture(map->textures.ea);
+	if (map->s_present.SO)
+		mlx_delete_texture(map->textures.so);
+	if (map->s_present.WE)
+		mlx_delete_texture(map->textures.we);
+	if (map->s_present.NO)
+		mlx_delete_texture(map->textures.no);
+	map_rows = (char **)map->map->memory;
+	i = 0;
+	while (map->map->len && i < map->map->len)
+	{
+		free(map_rows[i]);
+		map_rows[i] = NULL;
+		i++;
+	}
+	vec_free(map->map);
+	free(map->map);
 }
 
 static void	destroy_map(t_map *map)
@@ -38,17 +42,15 @@ static void	destroy_map(t_map *map)
 	char **map_rows;
 	size_t	i;
 
-	// free map rows
-	free(map->textures.ea);
-	map->textures.ea = NULL;
-	free(map->textures.so);
-	map->textures.so = NULL;
-	free(map->textures.we);
-	map->textures.we = NULL;
-	free(map->textures.no);
-	map->textures.no = NULL;
+	if (map->textures.ea)
+		mlx_delete_texture(map->textures.ea);
+	if (map->textures.so)
+		mlx_delete_texture(map->textures.so);
+	if (map->textures.we)
+		mlx_delete_texture(map->textures.we);
+	if (map->textures.no)
+		mlx_delete_texture(map->textures.no);
 	map_rows = (char **)map->map->memory;
-	// free_2d(map_rows); //custom free for vector stuff
 	i = 0;
 	while (map->map->len && i < map->map->len)
 	{
