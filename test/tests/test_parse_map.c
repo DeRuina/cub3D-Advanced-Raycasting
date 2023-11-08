@@ -10,12 +10,10 @@ static void	init_map(t_map *map)
 
 	map->cealing_color = -1;
 	map->floor_color = -1;
-	map->s_present.C = 0;
-	map->s_present.EA = 0;
-	map->s_present.F = 0;
-	map->s_present.NO = 0;
-	map->s_present.SO = 0;
-	map->s_present.WE = 0;
+	map->textures.ea = NULL;
+	map->textures.no = NULL;
+	map->textures.so = NULL;
+	map->textures.we = NULL;
 
 	m = malloc(sizeof(t_vec));
 	if (!m)
@@ -30,13 +28,13 @@ static void	destroy_map(t_map *map)
 	char **map_rows;
 	size_t	i;
 
-	if (map->s_present.EA)
+	if (map->textures.ea)
 		mlx_delete_texture(map->textures.ea);
-	if (map->s_present.SO)
+	if (map->textures.so)
 		mlx_delete_texture(map->textures.so);
-	if (map->s_present.WE)
+	if (map->textures.we)
 		mlx_delete_texture(map->textures.we);
-	if (map->s_present.NO)
+	if (map->textures.no)
 		mlx_delete_texture(map->textures.no);
 	map_rows = (char **)map->map->memory;
 	i = 0;
