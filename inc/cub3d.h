@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/11/08 13:15:10 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/09 13:53:35 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <math.h>
 # include <stdio.h>
 
+# define HEIGHT 500
+# define WIDTH 500
 
 typedef enum e_error
 {
@@ -31,7 +33,8 @@ typedef enum e_error
 	INVALID_MAP,
 	INVALID_COLOR,
 	INVALID_TEXTURE,
-	NO_PLAYER
+	NO_PLAYER,
+	MLX_ERROR
 } t_error;
 
 
@@ -45,12 +48,20 @@ typedef struct s_textures
 
 typedef struct s_map
 {
-
+	int			max_height;
+	int			max_width;
 	int			floor_color;
 	int			cealing_color;
 	t_textures	textures;
 	t_vec		*map;
 }				t_map;
+
+typedef struct s_cub
+{
+	t_map *map;
+	mlx_t *mlx;
+	mlx_image_t *image;
+}				t_cub;
 
 int				parse_map(char *path, t_map *map);
 void			dt_error(int err_no);

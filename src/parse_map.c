@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 14:31:07 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/08 13:13:13 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/09 14:05:25 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,23 @@ static void check_validity(t_map *map)
 		dt_error(INVALID_TEXTURE);
 }
 
+static void get_max_dimensions(t_map *map)
+{
+	size_t	y;
+	int	row_len;
+
+	row_len = 0;
+	y = 0;
+	map->max_height = map->map->len;
+	while (y < map->map->len)
+	{
+		row_len = ft_strlen(((char **)map->map->memory)[y]) - 1; // -1 for newline
+		if (row_len > map->max_width)
+			map->max_width = row_len;
+		y++;
+	}
+}
+
 int	parse_map(char *path, t_map *map)
 {
 	int		fd;
@@ -164,6 +181,7 @@ int	parse_map(char *path, t_map *map)
 	get_params(fd, map);
 	get_map(fd, map);
 	check_validity(map);
+	get_max_dimensions(map);
 	close(fd);
 	return (0);
 }
