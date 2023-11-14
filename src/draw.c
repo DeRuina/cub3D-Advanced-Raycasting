@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:52:28 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/14 13:42:13 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/14 14:36:59 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,19 @@ void draw(void *param)
 	char **map_rows;
 
 	cub = param;
-	x = 0;
-	y = 0;
 	offset = cub->image->width / ft_max(cub->map->max_height, cub->map->max_width);
 	draw_background(cub);
 	map_rows = (char **)cub->map->map->memory;
-	// while (cub->map->map_vec->memory)
-	// {
-	// 	/* code */
-	// }
-
-	draw_rect(cub->image, x * offset, y * offset, offset);
+	y = 0;
+	while (y < cub->map->max_height)
+	{
+		x = 0;
+		while (map_rows[y][x] && x < cub->map->max_width)
+		{
+			if (map_rows[y][x] == '1')
+				draw_rect(cub->image, x * offset, y * offset, offset);
+			x++;
+		}
+		y++;
+	}
 }
