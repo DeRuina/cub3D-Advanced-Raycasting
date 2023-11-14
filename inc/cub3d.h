@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/11/09 13:53:35 by druina           ###   ########.fr       */
+/*   Updated: 2023/11/14 13:41:03 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int				parse_map(char *path, t_map *map);
 void			dt_error(int err_no);
 void			store_map(char *line, t_map *map);
 int				store_map_params(char **line, t_map *map);
-int				is_precent(int *item);
+// int				is_precent(int *item);
+void			draw(void *param);
 
 #endif

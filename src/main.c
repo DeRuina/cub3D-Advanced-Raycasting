@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:02:10 by druina            #+#    #+#             */
-/*   Updated: 2023/11/09 13:53:59 by druina           ###   ########.fr       */
+/*   Updated: 2023/11/14 13:41:15 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,28 +85,7 @@ static t_cub init_cube(t_map *map)
 	return (cub);
 }
 
-void draw_map(void *param)
-{
-	t_cub *cub;
-	int i;
-	int j;
 
-	cub = param;
-	i = 0;
-	while (i < (int)cub->image->height)
-	{
-		j = 0;
-		while (j < (int)cub->image->width)
-		{
-
-			mlx_put_pixel(cub->image, j, i, 0xF1);
-			j++;
-		}
-		i++;
-	}
-
-
-}
 
 void print_map(t_map *map)
 {
@@ -131,7 +110,7 @@ int	main(int argc, char **argv)
 	cub = init_cube(&map);
 	parse_map(argv[1], &map);
 	print_map(&map);
-	mlx_loop_hook(cub.mlx, draw_map, &cub);
+	mlx_loop_hook(cub.mlx, draw, &cub);
 	mlx_loop(cub.mlx);
 	mlx_terminate(cub.mlx);
 	destroy_map(&map);
