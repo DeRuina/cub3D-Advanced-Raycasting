@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 15:19:15 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/09 13:27:05 by druina           ###   ########.fr       */
+/*   Updated: 2023/11/15 13:04:00 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	dt_strerror(err_no)
+static void	dt_strerror(int err_no)
 {
 	static char	*dt_errors[MLX_ERRMAX] = {
 		"EXIT SUCCESS\n",
