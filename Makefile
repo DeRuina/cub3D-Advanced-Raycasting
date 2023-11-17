@@ -16,7 +16,7 @@ ARFLAGS		= rcs
 
 SRC 		= \
 $S/main.c	$S/parse_map.c	$S/mlx_colors.c	$S/utils.c $S/store_map_params.c $S/store_map.c \
-$S/draw.c
+$S/draw.c	$S/plot_line.c	$S/get_gradient.c
 
 OBJ			= $(SRC:$S%=$O%.o)
 

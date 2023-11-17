@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:52:28 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/15 12:49:42 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/17 14:28:45 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void draw(void *param)
 	char **map_rows;
 
 	cub = param;
-	rect_len = cub->image->width / ft_max(cub->map->max_height, cub->map->max_width);
+	rect_len = 16;
 	draw_background(cub);
 	map_rows = (char **)cub->map->map->memory;
 	y = 0;
@@ -108,4 +108,11 @@ void draw(void *param)
 		}
 		y++;
 	}
+	t_bres bres;
+
+	bres.x0 = 64;
+	bres.x1 = 512;
+	bres.y0 = 64;
+	bres.y1 = 512;
+	plot_line(bres, cub->image, 0x00FF00FF, 0x0000FFFF);
 }

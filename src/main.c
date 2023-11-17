@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:02:10 by druina            #+#    #+#             */
-/*   Updated: 2023/11/15 13:06:15 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/17 14:24:58 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ static void	destroy_map(t_map *map)
 	free(map->map);
 }
 
-static t_player *init_player()
-{
+// static t_player *init_player()
+// {
 
-}
+// }
 
 static void hehe_errror(mlx_t *mlx)
 {
@@ -81,17 +81,14 @@ static t_cub init_cube(t_map *map)
 		ft_putstr_fd((char *)mlx_strerror(mlx_errno), 2);
 		dt_error(MLX_ERROR);
 	}
-	cub.image = mlx_new_image(cub.mlx, 512, 512);
+	cub.image = mlx_new_image(cub.mlx, WIDTH, HEIGHT);
 	if (!cub.image)
 		hehe_errror(cub.mlx);
 	if (mlx_image_to_window(cub.mlx, cub.image, 0, 0) == -1)
 		hehe_errror(cub.mlx);
-	cub.player = init_player();
+	// cub.player = init_player();
 	return (cub);
 }
-
-
-
 
 
 void print_map(t_map *map)

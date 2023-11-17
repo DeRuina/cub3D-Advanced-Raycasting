@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/11/15 12:58:07 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/17 14:32:05 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <math.h>
 # include <stdio.h>
 
-# define HEIGHT 512
-# define WIDTH 512
+# define HEIGHT 1024
+# define WIDTH 1024
 
 typedef enum e_error
 {
@@ -60,11 +60,25 @@ typedef struct s_player
 {
 	float	x;
 	float	y;
+	int		map_x;
+	int		map_y;
 	float	delta_x;
 	float	delta_y;
 	float	angle;
 }				t_player;
 
+typedef struct s_bres
+{
+	int	x0;
+	int	x1;
+	int	y0;
+	int	y1;
+	int	delta_x;
+	int	delta_y;
+	int	sign_x;
+	int	sign_y;
+	int	err;
+}				t_bres;
 
 typedef struct s_cub
 {
@@ -83,5 +97,8 @@ void			draw(void *param);
 
 // parse_map.c
 int				is_player(char c);
+
+void	plot_line(t_bres bres, mlx_image_t *img, int start_color, int end_color);
+int		get_gradient(t_bres bres, int start_color, int end_color);
 
 #endif
