@@ -6,16 +6,20 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:02:10 by druina            #+#    #+#             */
-/*   Updated: 2023/11/17 16:07:31 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/17 16:25:14 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	init_map(t_map *map)
+static t_map *init_map()
 {
-	t_vec *m;
+	t_map *map;
+	t_vec *map_vec;
 
+	map = malloc(sizeof(t_map));
+	if (!map)
+		dt_error(MALLOC_FAIL);
 	map->max_height = -1;
 	map->max_width = -1;
 	map->cealing_color = -1;
@@ -24,12 +28,13 @@ static void	init_map(t_map *map)
 	map->textures.no = NULL;
 	map->textures.so = NULL;
 	map->textures.we = NULL;
-	m = malloc(sizeof(t_vec));
-	if (!m)
+	map_vec = malloc(sizeof(t_vec));
+	if (!map_vec)
 		dt_error(MALLOC_FAIL);
-	if (vec_new(m, 10, sizeof(char *)) < 0)
+	if (vec_new(map_vec, 10, sizeof(char *)) < 0)
 		dt_error(MALLOC_FAIL);
-	map->map = m;
+	map->map = map_vec;
+	return (map);
 }
 
 static void	destroy_map(t_map *map)
@@ -55,6 +60,9 @@ static void	destroy_map(t_map *map)
 	}
 	vec_free(map->map);
 	free(map->map);
+	map->map = NULL;
+	free(map);
+	map = NULL;
 }
 
 static void hehe_errror(mlx_t *mlx)
@@ -75,12 +83,17 @@ static t_player *init_player()
 	return (player);
 }
 
-static t_cub init_cube(t_map *map)
+static void destroy_player(t_player *player)
+{
+	free(player);
+	player = NULL;
+}
+
+static t_cub init_cube()
 {
 	t_cub cub;
 
-	cub.map = map;
-	init_map(map);
+	cub.map = init_map();
 	cub.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
 	if (!cub.mlx)
 	{
@@ -94,6 +107,14 @@ static t_cub init_cube(t_map *map)
 		hehe_errror(cub.mlx);
 	cub.player = init_player();
 	return (cub);
+}
+
+static void destroy_cube(t_cub *cub)
+{
+	destroy_map(cub->map);
+	destroy_player(cub->player);
+	mlx_delete_image(cub->mlx, cub->image);
+	mlx_terminate(cub->mlx);
 }
 
 
@@ -112,22 +133,21 @@ void print_map(t_map *map)
 // #include <stdio.h>
 int	main(int argc, char **argv)
 {
-	t_map	map; // malloc this?
 	t_cub	cub;
 
 	if (argc != 2)
 		dt_error(WRONG_AMOUNT);
 	if (ft_strlen(ft_strnstr(argv[1], ".cub", ft_strlen(argv[1]))) != 4 && ft_strlen(argv[1]) > 4)
 		dt_error(FILE_TYPE);
-	cub = init_cube(&map);
+	cub = init_cube();
 	parse_map(argv[1], &cub);
-	printf("angle: %.3f\n", cub.player->angle);
-	print_map(&map); // for debuging
+	// printf("angle: %.3f\n", cub.player->angle);
+	// print_map(cub.map); // for debuging
 	mlx_loop_hook(cub.mlx, draw, &cub);
 	mlx_loop(cub.mlx);
-	mlx_terminate(cub.mlx);
-	destroy_map(&map);
-	// system("leaks cub3D");
+	destroy_cube(&cub);
+	// destroy_map(&map);
+	system("leaks cub3D");
 	return (0);
 }
 
