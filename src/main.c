@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:02:10 by druina            #+#    #+#             */
-/*   Updated: 2023/11/17 14:24:58 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/17 16:07:31 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,22 @@ static void	destroy_map(t_map *map)
 	free(map->map);
 }
 
-// static t_player *init_player()
-// {
-
-// }
-
 static void hehe_errror(mlx_t *mlx)
 {
 	mlx_close_window(mlx);
 	ft_putstr_fd((char *)mlx_strerror(mlx_errno), 2);
 	dt_error(MLX_ERROR);
+}
+
+static t_player *init_player()
+{
+	t_player *player;
+
+	player = malloc(sizeof(player));
+	if (!player)
+		dt_error(MALLOC_FAIL);
+	ft_bzero(player, sizeof(t_player));
+	return (player);
 }
 
 static t_cub init_cube(t_map *map)
@@ -86,7 +92,7 @@ static t_cub init_cube(t_map *map)
 		hehe_errror(cub.mlx);
 	if (mlx_image_to_window(cub.mlx, cub.image, 0, 0) == -1)
 		hehe_errror(cub.mlx);
-	// cub.player = init_player();
+	cub.player = init_player();
 	return (cub);
 }
 
@@ -102,9 +108,11 @@ void print_map(t_map *map)
 
 }
 
+
+// #include <stdio.h>
 int	main(int argc, char **argv)
 {
-	t_map	map;
+	t_map	map; // malloc this?
 	t_cub	cub;
 
 	if (argc != 2)
@@ -112,8 +120,9 @@ int	main(int argc, char **argv)
 	if (ft_strlen(ft_strnstr(argv[1], ".cub", ft_strlen(argv[1]))) != 4 && ft_strlen(argv[1]) > 4)
 		dt_error(FILE_TYPE);
 	cub = init_cube(&map);
-	parse_map(argv[1], &map);
-	print_map(&map);
+	parse_map(argv[1], &cub);
+	printf("angle: %.3f\n", cub.player->angle);
+	print_map(&map); // for debuging
 	mlx_loop_hook(cub.mlx, draw, &cub);
 	mlx_loop(cub.mlx);
 	mlx_terminate(cub.mlx);

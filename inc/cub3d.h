@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/11/17 14:32:05 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/17 15:36:15 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,14 @@ typedef struct s_cub
 	t_player	*player;
 }				t_cub;
 
-int				parse_map(char *path, t_map *map);
-void			dt_error(int err_no);
-void			store_map(char *line, t_map *map);
-int				store_map_params(char **line, t_map *map);
-// int				is_precent(int *item);
-void			draw(void *param);
+int		parse_map(char *path, t_cub *cub);
+void	dt_error(int err_no);
+void	store_map(char *line, t_map *map);
+int		store_map_params(char **line, t_map *map);
+void	draw(void *param);
 
 // parse_map.c
-int				is_player(char c);
+int		is_player(char c);
 
 void	plot_line(t_bres bres, mlx_image_t *img, int start_color, int end_color);
 int		get_gradient(t_bres bres, int start_color, int end_color);

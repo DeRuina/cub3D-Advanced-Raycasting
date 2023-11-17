@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 14:31:07 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/09 14:05:25 by druina           ###   ########.fr       */
+/*   Updated: 2023/11/17 16:06:21 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int is_player(char c)
 	while(player[i])
 	{
 		if (player[i] == c)
-			return (1);
+			return (player[i]);
 		i++;
 	}
 	return (0);
@@ -171,10 +171,58 @@ static void get_max_dimensions(t_map *map)
 	}
 }
 
-int	parse_map(char *path, t_map *map)
+static float get_player_angle(char c)
+{
+	if ((char)(is_player(c)) == 'N')
+		return (0.0f);
+	else if ((char)(is_player(c)) == 'E')
+		return (90.0f);
+	else if ((char)(is_player(c)) == 'S')
+		return (180.0f);
+	else if ((char)(is_player(c)) == 'W')
+		return (270.0f);
+	return (0.0f);
+}
+
+static void get_player(t_map *map, t_player *player)
+{
+	char **rows;
+	size_t i;
+	size_t j;
+	(void)player;
+
+	rows = (char **)map->map->memory;
+
+	i = 0;
+	while (map->map->len != 0 && i < map->map->len)
+	{
+		j = 0;
+		while (rows[i] && rows[i][j])
+		{
+			if (is_player(rows[i][j]))
+			{
+				player->x = (float)j;
+				player->y = (float)i;
+				// player->map_x = j;
+				// player->map_y = i;
+
+				player->angle = get_player_angle(rows[i][j]);
+				return ;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+int	parse_map(char *path, t_cub *cub)
 {
 	int		fd;
+	t_map *map;
+	t_player *player;
 
+	map = cub->map;
+	player = cub->player;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		dt_error(FILE_OPEN);
@@ -182,6 +230,7 @@ int	parse_map(char *path, t_map *map)
 	get_map(fd, map);
 	check_validity(map);
 	get_max_dimensions(map);
+	get_player(map, player);
 	close(fd);
 	return (0);
 }
