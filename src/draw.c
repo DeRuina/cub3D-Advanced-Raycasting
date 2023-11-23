@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:52:28 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/17 14:28:45 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/23 15:35:54 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,20 @@ int ft_max(int a, int b)
 	return (b);
 }
 
+
+int FixAng(int a) /// move this
+{
+	if (a > 359)
+	{
+		a -= 360;
+	}
+	if (a < 0)
+	{
+		a += 360;
+	}
+	return a;
+}
+
 void draw(void *param)
 {
 	t_cub *cub;
@@ -91,7 +105,8 @@ void draw(void *param)
 	char **map_rows;
 
 	cub = param;
-	rect_len = 16;
+	// rect_len = 16;
+	rect_len = 64;
 	draw_background(cub);
 	map_rows = (char **)cub->map->map->memory;
 	y = 0;
@@ -110,9 +125,13 @@ void draw(void *param)
 	}
 	t_bres bres;
 
-	bres.x0 = 64;
-	bres.x1 = 512;
-	bres.y0 = 64;
-	bres.y1 = 512;
+	float ray_angle = FixAng(cub->player->angle + 30); // ray set back 30 degrees
+	float *result = vertical_ray(ray_angle, cub->player, cub->map);
+
+
+	bres.x0 = cub->player->x;
+	bres.x1 = result[0];
+	bres.y0 = cub->player->y;
+	bres.y1 = result[1];
 	plot_line(bres, cub->image, 0x00FF00FF, 0x0000FFFF);
 }

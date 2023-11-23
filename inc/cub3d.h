@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/11/23 13:23:41 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/23 15:07:41 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_player
 {
 	float	x;
 	float	y;
-	int		map_x;
+	int		map_x; // remoev these
 	int		map_y;
 	float	delta_x;
 	float	delta_y;
@@ -103,5 +103,7 @@ int		is_player(char c);
 
 void	plot_line(t_bres bres, mlx_image_t *img, int start_color, int end_color);
 int		get_gradient(t_bres bres, int start_color, int end_color);
+
+float *vertical_ray(float ray_angle, t_player *player, t_map *map);
 
 #endif
