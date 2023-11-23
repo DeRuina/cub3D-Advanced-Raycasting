@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/11/17 16:57:20 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/23 13:23:41 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct s_cub
 
 
 t_cub	cub_init();
-void	cub_destroy();
+void	cub_destroy(t_cub *cub);
 
 int		parse_map(char *path, t_cub *cub);
 void	dt_error(int err_no);

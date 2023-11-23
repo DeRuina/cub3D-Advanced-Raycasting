@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:54:59 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/17 16:59:36 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/23 13:25:13 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static t_player *init_player()
 {
 	t_player *player;
 
-	player = malloc(sizeof(player));
+	player = malloc(sizeof(t_player));
 	if (!player)
 		dt_error(MALLOC_FAIL);
 	ft_bzero(player, sizeof(t_player));
@@ -60,7 +60,7 @@ t_cub cub_init()
 	t_cub cub;
 
 	cub.map = init_map();
-	cub.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
+	cub.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", false);
 	if (!cub.mlx)
 	{
 		ft_putstr_fd((char *)mlx_strerror(mlx_errno), 2);

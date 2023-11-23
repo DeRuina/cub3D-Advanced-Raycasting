@@ -6,11 +6,22 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:02:10 by druina            #+#    #+#             */
-/*   Updated: 2023/11/17 16:59:53 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/23 13:25:55 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void my_keyhook(mlx_key_data_t keydata, void* param)
+{
+	t_cub *cub;
+
+	cub = param;
+	// If we PRESS the 'J' key, print "Hello".
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+		exit(0);
+		// cub_destroy(cub);
+}
 
 void print_map(t_map *map)
 {
@@ -32,8 +43,11 @@ int	main(int argc, char **argv)
 		dt_error(FILE_TYPE);
 	cub = cub_init();
 	parse_map(argv[1], &cub);
-	// printf("angle: %.3f\n", cub.player->angle);
-	// print_map(cub.map); // for debuging
+	// printf("angle: %.3f\n", cub->player->angle);
+	// print_map(cub->map); // for debuging
+
+	mlx_key_hook(cub.mlx, &my_keyhook, &cub);
+	// mlx_key_hook(cub.mlx, &my_keyhook, NULL);
 	mlx_loop_hook(cub.mlx, draw, &cub);
 	mlx_loop(cub.mlx);
 	cub_destroy(&cub);
