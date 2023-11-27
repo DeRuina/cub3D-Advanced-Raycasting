@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/11/23 15:07:41 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/27 13:53:42 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ int		is_player(char c);
 void	plot_line(t_bres bres, mlx_image_t *img, int start_color, int end_color);
 int		get_gradient(t_bres bres, int start_color, int end_color);
 
-float *vertical_ray(float ray_angle, t_player *player, t_map *map);
+// float *vertical_ray(float ray_angle, t_player *player, t_map *map);
+// float *ray(int x, t_cub *cub);
+float *ray(t_cub *cub);
 
 #endif

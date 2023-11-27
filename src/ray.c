@@ -5,164 +5,141 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/16 12:42:02 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/23 15:31:42 by tspoof           ###   ########.fr       */
+/*   Created: 2023/11/27 12:59:39 by tspoof            #+#    #+#             */
+/*   Updated: 2023/11/27 15:50:44 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-#define M_PI 3.14159265358979323846264338327950288
+// double posX = 22, posY = 12;      // x and y start position
+double dirX = 0, dirY = -1;       // initial direction vector
+double planeX = 0.66, planeY = 0; // the 2d raycaster version of camera plane
 
-float degToRad(int a)
+float *ray(/*int x,*/ t_cub *cub)
 {
-	return a * M_PI / 180.0;
-}
-
-// int FixAng(int a)
-// {
-// 	if (a > 359)
-// 	{
-// 		a -= 360;
-// 	}
-// 	if (a < 0)
-// 	{
-// 		a += 360;
-// 	}
-// 	return a;
-// }
-
-float distance(ax, ay, bx, by, ang)
-{
-	return cos(degToRad(ang)) * (bx - ax) - sin(degToRad(ang)) * (by - ay);
-}
-
-float *vertical_ray(float ray_angle, t_player *player, t_map *map)
-{
-	int depth_of_field;
-	int side;
-	float distance_vertical;
-	float ray_x;
-	float ray_y;
-	float x_offset;
-	float y_offset;
-
-	float *result;
-
-	// player->map_x = (int)player->x / 16; // change these to ray struct
-	// player->map_y = (int)player->y / 16;
-
-	//---Vertical---
-	depth_of_field = 0;
-	side = 0;
-	distance_vertical = 100000;
-	float Tan = tan(degToRad(ray_angle));
-	if (cos(degToRad(ray_angle)) > 0.001)
+	double posX = cub->player->x / 64, posY = cub->player->y / 64;
+	int w = WIDTH; // ???
+	int h = HEIGHT;
+	for (int x = 0; x < w; x++)
 	{
-		ray_x = (((int)player->x >> 6) << 6) + 64;
-		ray_y = (player->x - ray_x) * Tan + player->y;
-		x_offset = 64;
-		y_offset = -x_offset * Tan;
-	} // looking left
-	else if (cos(degToRad(ray_angle)) < -0.001)
-	{
-		ray_x = (((int)player->x >> 6) << 6) - 0.0001;
-		ray_y = (player->x - ray_x) * Tan + player->y;
-		x_offset = -64;
-		y_offset = -x_offset * Tan;
-	} // looking right
-	else
-	{
-		ray_x = player->x;
-		ray_y = player->y;
-		depth_of_field = 8;
-	} // looking up or down. no hit
 
-	while (depth_of_field < 8)
+		// calculate ray position and direction
+		double cameraX = 2 * x / (double)w - 1; // x-coordinate in camera space
+		double rayDirX = dirX + planeX * cameraX;
+		double rayDirY = dirY + planeY * cameraX;
+		// which box of the map we're in
+		int mapX = (int)posX;
+		int mapY = (int)posY;
+
+		// length of ray from current position to next x or y-side
+		double sideDistX;
+		double sideDistY;
+
+		// length of ray from one x or y-side to next x or y-side
+		// these are derived as:
+		// deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX))
+		// deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY))
+		// which can be simplified to abs(|rayDir| / rayDirX) and abs(|rayDir| / rayDirY)
+		// where |rayDir| is the length of the vector (rayDirX, rayDirY). Its length,
+		// unlike (dirX, dirY) is not 1, however this does not matter, only the
+		// ratio between deltaDistX and deltaDistY matters, due to the way the DDA
+		// stepping further below works. So the values can be computed as below.
+		//  Division through zero is prevented, even though technically that's not
+		//  needed in C++ with IEEE 754 floating point values.
+		double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
+		double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
+
+		double perpWallDist;
+
+		// what direction to step in x or y-direction (either +1 or -1)
+		int stepX;
+		int stepY;
+
+		int hit = 0; // was there a wall hit?
+		int side;    // was a NS or a EW wall hit?
+		// calculate step and initial sideDist
+		if (rayDirX < 0)
 		{
-			player->map_x = (int)(ray_x) >> 6;
-			player->map_y = (int)(ray_y) >> 6;
-
-			// checks that ray hits the wall and is within the map
-			if (player->map_y > 0
-				&& player->map_y < map->max_height
-				&& player->map_x < (int)ft_strlen(((char**)map->map->memory)[player->map_y])
-				&& ((char**)map->map->memory)[player->map_y][player->map_x] == '1')
+			stepX = -1;
+			sideDistX = (posX - mapX) * deltaDistX;
+		}
+		else
+		{
+			stepX = 1;
+			sideDistX = (mapX + 1.0 - posX) * deltaDistX;
+		}
+		if (rayDirY < 0)
+		{
+			stepY = -1;
+			sideDistY = (posY - mapY) * deltaDistY;
+		}
+		else
+		{
+			stepY = 1;
+			sideDistY = (mapY + 1.0 - posY) * deltaDistY;
+		}
+		// perform DDA
+		while (hit == 0)
+		{
+			// jump to next map square, either in x-direction, or in y-direction
+			if (sideDistX < sideDistY)
 			{
-				depth_of_field = 8;
-				distance_vertical = cos(degToRad(ray_angle)) * (ray_x - player->x) - sin(degToRad(ray_angle)) * (ray_y - player->y);
-			} // hit
+				sideDistX += deltaDistX;
+				mapX += stepX;
+				side = 0;
+			}
 			else
 			{
-				ray_x += x_offset;
-				ray_y += y_offset;
-				depth_of_field += 1;
-			} // check next horizontal
+				sideDistY += deltaDistY;
+				mapY += stepY;
+				side = 1;
+			}
+			// Check if ray has hit a wall
+			if (((char **)cub->map->map->memory)[mapY][mapX] == '1')
+				hit = 1;
 		}
-		result = malloc(sizeof(float) * 3);
-		result[0] = ray_x;
-		result[1] = ray_y;
-		result[2] = distance_vertical;
-		return (result);
+		// Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
+		// hit to the camera plane. Euclidean to center camera point would give fisheye effect!
+		// This can be computed as (mapX - posX + (1 - stepX) / 2) / rayDirX for side == 0, or same formula with Y
+		// for size == 1, but can be simplified to the code below thanks to how sideDist and deltaDist are computed:
+		// because they were left scaled to |rayDir|. sideDist is the entire length of the ray above after the multiple
+		// steps, but we subtract deltaDist once because one step more into the wall was taken above.
+		if (side == 0)
+			perpWallDist = (sideDistX - deltaDistX);
+		else
+			perpWallDist = (sideDistY - deltaDistY);
+
+		// Calculate height of line to draw on screen
+		int lineHeight = (int)(h / perpWallDist);
+
+		// calculate lowest and highest pixel to fill in current stripe
+		int drawStart = -lineHeight / 2 + h / 2;
+		if (drawStart < 0)
+			drawStart = 0;
+		int drawEnd = lineHeight / 2 + h / 2;
+		if (drawEnd >= h)
+			drawEnd = h - 1;
+
+		int color = 0x00FF00FF;
+		if (side == 1)
+		{
+			color = color / 2;
+		}
+
+		t_bres bres;
+
+		bres.x0 = x;
+		bres.x1 = x;
+		bres.y0 = drawStart;
+		bres.y1 = drawEnd;
+		plot_line(bres, cub->image, 0x00FF00FF, 0x0000FFFF);
+	}
+
+	float *result;
+	result = NULL;
+	// result = malloc(sizeof(float) * 2);
+	// result[0] = mapX * 64;
+	// result[1] = mapY * 64;
+	return (result);
 }
-
-
-// void horizontal_ray(float ray_angle, t_cub *cub)
-// {
-// 	int depth_of_field;
-// 	float distance_horizontal;
-// 	float Tan;
-// 	float ray_x;
-// 	float ray_y;
-
-// 	float x_offset;
-// 	float y_offset;
-
-// 	// t_player
-// 	float player->x;
-// 	float player->y;
-
-
-// 	//---Horizontal---
-// 	depth_of_field = 0;
-// 	distance_horizontal = 100000;
-// 	Tan = 1.0 / Tan;
-// 	if (sin(degToRad(ray_angle)) > 0.001)
-// 	{
-// 		ray_y = (((int)player->y >> 6) << 6) - 0.0001;
-// 		ray_x = (player->y - ray_y) * Tan + player->x;
-// 		y_offset = -64;
-// 		x_offset = -y_offset * Tan;
-// 	} // looking up
-// 	else if (sin(degToRad(ray_angle)) < -0.001)
-// 	{
-// 		ray_y = (((int)player->y >> 6) << 6) + 64;
-// 		ray_x = (player->y - ray_y) * Tan + player->x;
-// 		y_offset = 64;
-// 		x_offset = -y_offset * Tan;
-// 	} // looking down
-// 	else
-// 	{
-// 		ray_x = player->x;
-// 		ray_y = player->y;
-// 		depth_of_field = 8;
-// 	} // looking straight left or right
-
-// 	while (depth_of_field < 8)
-// 	{
-// 		player->map_x = (int)(ray_x) >> 6;
-// 		player->map_y = (int)(ray_y) >> 6;
-// 		map_position = player->map_y * mapX + player->map_x;
-// 		if (map_position > 0 && map_position < mapX * mapY && map[map_position] == 1)
-// 		{
-// 			depth_of_field = 8;
-// 			distance_horizontal = cos(degToRad(ray_angle)) * (ray_x - player->x) - sin(degToRad(ray_angle)) * (ray_y - player->y);
-// 		} // hit
-// 		else
-// 		{
-// 			ray_x += x_offset;
-// 			ray_y += y_offset;
-// 			depth_of_field += 1;
-// 		} // check next horizontal
-// 	}
-// }
