@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:54:59 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/23 13:25:13 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/28 14:11:42 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,12 @@ static t_player *init_player()
 	if (!player)
 		dt_error(MALLOC_FAIL);
 	ft_bzero(player, sizeof(t_player));
+
+	// change these based on the player diur
+	player->dir_x = 0;
+	player->dir_y = -1;
+	player->plane_x = 0.66;
+	player->plane_y = 0;
 	return (player);
 }
 

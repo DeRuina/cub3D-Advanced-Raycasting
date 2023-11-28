@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/11/27 13:53:42 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/28 14:13:55 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,35 @@ typedef struct s_player
 {
 	float	x;
 	float	y;
-	int		map_x; // remoev these
-	int		map_y;
-	float	delta_x;
-	float	delta_y;
-	float	angle;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
 }				t_player;
+
+typedef struct s_ray
+{
+	double	camera_x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	double	pos_x;
+	double	pos_y;
+	int		map_x;
+	int		map_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	perp_wall_dist;
+	int		step_x;
+	int		step_y;
+	int		hit;
+	int		side;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+}				t_ray;
+
 
 typedef struct s_bres
 {
@@ -106,6 +129,6 @@ int		get_gradient(t_bres bres, int start_color, int end_color);
 
 // float *vertical_ray(float ray_angle, t_player *player, t_map *map);
 // float *ray(int x, t_cub *cub);
-float *ray(t_cub *cub);
+void	ray(int x, t_player *player, t_map *map, mlx_image_t *image);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 14:31:07 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/23 15:36:15 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/28 14:25:27 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,17 +171,49 @@ static void get_max_dimensions(t_map *map)
 	}
 }
 
-static float get_player_angle(char c)
+void	set_north(t_player *player)
+{
+	player->dir_x = 0.0;
+	player->dir_y = -1.0;
+	player->plane_x = 0.66;
+	player->plane_y = 0.0;
+}
+
+void	set_south(t_player *player)
+{
+	player->dir_x = 0.0;
+	player->dir_y = 1.0;
+	player->plane_x = -0.66;
+	player->plane_y = 0.0;
+}
+
+void	set_west(t_player *player)
+{
+	player->dir_x = -1.0;
+	player->dir_y = 0.0;
+	player->plane_x = 0.0;
+	player->plane_y = -0.66;
+}
+
+void	set_east(t_player *player)
+{
+	player->dir_x = 1.0;
+	player->dir_y = 0.0;
+	player->plane_x = 0.0;
+	player->plane_y = 0.66;
+}
+
+
+static void set_player_angle(char c, t_player *player)
 {
 	if ((char)(is_player(c)) == 'N')
-		return (0.0f);
+		set_north(player);
 	else if ((char)(is_player(c)) == 'E')
-		return (90.0f);
+		set_east(player);
 	else if ((char)(is_player(c)) == 'S')
-		return (180.0f);
+		set_south(player);
 	else if ((char)(is_player(c)) == 'W')
-		return (270.0f);
-	return (0.0f);
+		set_west(player);
 }
 
 static void get_player(t_map *map, t_player *player)
@@ -189,7 +221,6 @@ static void get_player(t_map *map, t_player *player)
 	char **rows;
 	size_t i;
 	size_t j;
-	(void)player;
 
 	rows = (char **)map->map->memory;
 
@@ -203,10 +234,7 @@ static void get_player(t_map *map, t_player *player)
 			{
 				player->x = (float)j * 64 + 32;
 				player->y = (float)i * 64 + 32;
-				player->map_x = j;
-				player->map_y = i;
-
-				player->angle = get_player_angle(rows[i][j]);
+				set_player_angle(rows[i][j], player);
 				return ;
 			}
 			j++;
