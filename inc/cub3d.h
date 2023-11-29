@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/11/28 14:13:55 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/29 15:33:46 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,16 @@ typedef struct s_map
 
 typedef struct s_player
 {
-	float	x;
-	float	y;
+	double	x;
+	double	y;
+	// float	x;
+	// float	y;
 	double	dir_x;
 	double	dir_y;
 	double	plane_x;
 	double	plane_y;
+	float	move_speed;
+
 }				t_player;
 
 typedef struct s_ray
@@ -71,8 +75,8 @@ typedef struct s_ray
 	double	camera_x;
 	double	ray_dir_x;
 	double	ray_dir_y;
-	double	pos_x;
-	double	pos_y;
+	// double	pos_x;
+	// double	pos_y;
 	int		map_x;
 	int		map_y;
 	double	side_dist_x;
@@ -105,10 +109,11 @@ typedef struct s_bres
 
 typedef struct s_cub
 {
-	t_map *map;
-	mlx_t *mlx;
-	mlx_image_t *image;
+	t_map		*map;
+	mlx_t		*mlx;
+	mlx_image_t	*image;
 	t_player	*player;
+	t_ray		*ray;
 }				t_cub;
 
 
@@ -119,7 +124,8 @@ int		parse_map(char *path, t_cub *cub);
 void	dt_error(int err_no);
 void	store_map(char *line, t_map *map);
 int		store_map_params(char **line, t_map *map);
-void	draw(void *param);
+// void	draw(void *param);
+void	draw(t_cub *cub);
 
 // parse_map.c
 int		is_player(char c);
@@ -129,6 +135,6 @@ int		get_gradient(t_bres bres, int start_color, int end_color);
 
 // float *vertical_ray(float ray_angle, t_player *player, t_map *map);
 // float *ray(int x, t_cub *cub);
-void	ray(int x, t_player *player, t_map *map, mlx_image_t *image);
+void	ray(int x, t_cub *cub);
 
 #endif

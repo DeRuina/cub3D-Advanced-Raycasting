@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:54:59 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/28 14:11:42 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/29 15:33:52 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,19 @@ static t_player *init_player()
 	if (!player)
 		dt_error(MALLOC_FAIL);
 	ft_bzero(player, sizeof(t_player));
-
-	// change these based on the player diur
-	player->dir_x = 0;
-	player->dir_y = -1;
-	player->plane_x = 0.66;
-	player->plane_y = 0;
+	// player->speed = 2.0;
 	return (player);
+}
+
+static t_ray *init_ray()
+{
+	t_ray *ray;
+
+	ray = malloc(sizeof(t_ray));
+	if (!ray)
+		dt_error(MALLOC_FAIL);
+	ft_bzero(ray, sizeof(t_ray));
+	return (ray);
 }
 
 t_cub cub_init()
@@ -78,5 +84,6 @@ t_cub cub_init()
 	if (mlx_image_to_window(cub.mlx, cub.image, 0, 0) == -1)
 		hehe_errror(cub.mlx);
 	cub.player = init_player();
+	cub.ray = init_ray();
 	return (cub);
 }

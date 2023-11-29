@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:52:28 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/28 14:15:29 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/29 15:34:32 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,23 +126,32 @@ void draw_background(t_cub *cub)
 // 	y++;
 // }
 
-void	draw_walls(t_player *player, t_map *map, mlx_image_t *image)
+void	draw_walls(t_cub *cub)
 {
 	int	x;
 
 	x = 0;
 	while (x < WIDTH)
 	{
-		ray(x, player, map, image);
+		ray(x, cub);
 		x++;
 	}
 }
 
-void draw(void *param)
+void draw(t_cub *cub)
 {
-	t_cub *cub;
+	// t_cub *cub;
 
-	cub = param;
+
+	// cub = param;
+	ft_memset(cub->image->pixels, 0, (cub->image->width * cub->image->height) * sizeof(int32_t));
+	// // printf("%f\n", cub->ray->pos_x);
+	// printf("%f\n", cub->ray->pos_y);
+	// mlx_delete_image(cub->mlx, cub->image);
+	// cub->image = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
+	// if (mlx_image_to_window(cub->mlx, cub->image, 0, 0) == -1)
+	// 	exit(0); // hehe_error
 	draw_background(cub);
-	draw_walls(cub->player, cub->map, cub->image);
+	draw_walls(cub);
+	cub->player->move_speed = cub->mlx->delta_time * 5.0;
 }

@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 14:31:07 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/28 14:25:27 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/29 15:19:58 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,8 +232,10 @@ static void get_player(t_map *map, t_player *player)
 		{
 			if (is_player(rows[i][j]))
 			{
-				player->x = (float)j * 64 + 32;
-				player->y = (float)i * 64 + 32;
+				// player->x = (float)j * 64 + 32;
+				// player->y = (float)i * 64 + 32;
+				player->x = (double)j + 0.2;
+				player->y = (double)i + 0.2;
 				set_player_angle(rows[i][j], player);
 				return ;
 			}

@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:53:21 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/23 12:57:17 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/11/29 13:10:19 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,17 @@ static void destroy_player(t_player *player)
 	player = NULL;
 }
 
+static void destroy_ray(t_ray *ray)
+{
+	free(ray);
+	ray = NULL;
+}
+
 void cub_destroy(t_cub *cub)
 {
 	destroy_map(cub->map);
 	destroy_player(cub->player);
+	destroy_ray(cub->ray);
 	mlx_delete_image(cub->mlx, cub->image);
 	mlx_terminate(cub->mlx);
 	exit (0);
