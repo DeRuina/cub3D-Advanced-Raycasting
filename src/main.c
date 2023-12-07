@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:02:10 by druina            #+#    #+#             */
-/*   Updated: 2023/11/29 15:49:30 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/12/07 17:29:53 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void move_up(t_player *player, t_map *map, mlx_t *mlx)
 	char **m;
 	double move_speed;
 
-	move_speed = mlx->delta_time * 3.0;
+	move_speed = mlx->delta_time * player->move_speed;
 	m = (char **)(map->map->memory);
 	x = (int)(player->x + player->dir_x * move_speed);
 	y = (int)player->y;
@@ -37,7 +37,7 @@ void move_left(t_player *player, t_map *map, mlx_t *mlx)
 	char **m;
 	double move_speed;
 
-	move_speed = mlx->delta_time * 3.0;
+	move_speed = mlx->delta_time * player->move_speed;
 	m = (char **)(map->map->memory);
 	x = (int)(player->x + player->dir_y * move_speed);
 	y = (int)player->y;
@@ -55,7 +55,7 @@ void move_down(t_player *player, t_map *map, mlx_t *mlx)
 	char **m;
 	double move_speed;
 
-	move_speed = mlx->delta_time * 3.0;
+	move_speed = mlx->delta_time * player->move_speed;
 	m = (char **)(map->map->memory);
 	x = (int)(player->x - player->dir_x * move_speed);
 	y = (int)player->y;
@@ -73,7 +73,7 @@ void move_right(t_player *player, t_map *map, mlx_t *mlx)
 	char **m;
 	double move_speed;
 
-	move_speed = mlx->delta_time * 3.0;
+	move_speed = mlx->delta_time * player->move_speed;
 	m = (char **)(map->map->memory);
 	x = (int)(player->x - player->dir_y * move_speed);
 	y = (int)player->y;
@@ -92,7 +92,7 @@ void rotate_left(t_player *player, mlx_t *mlx)
 	double	old_plane_x;
 	double	rot_speed;
 
-	rot_speed = mlx->delta_time * 1.0;
+	rot_speed = mlx->delta_time * player->rot_speed;
 	old_dir_x = player->dir_x;
 	old_plane_x = player->plane_x;
 	player->dir_x = player->dir_x * cos(-1.0 * rot_speed) - player->dir_y
@@ -111,7 +111,7 @@ void rotate_right(t_player *player, mlx_t *mlx)
 	double	old_plane_x;
 	double	rot_speed;
 
-	rot_speed = mlx->delta_time * 1.0;
+	rot_speed = mlx->delta_time * player->rot_speed;
 	old_dir_x = player->dir_x;
 	old_plane_x = player->plane_x;
 	player->dir_x = player->dir_x * cos(1.0 * rot_speed) - player->dir_y
@@ -124,14 +124,14 @@ void rotate_right(t_player *player, mlx_t *mlx)
 		* cos(1.0 * rot_speed);
 }
 
-void my_keyhook(mlx_key_data_t keydata, void* param)
+// void my_keyhook(mlx_key_data_t keydata, void* param)
+void my_keyhook(void* param)
 {
 	t_cub *cub;
 
 	cub = param;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+	if (mlx_is_key_down(cub->mlx, MLX_KEY_ESCAPE))
 		exit(0);
-		// cub_destroy(cub);
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_W))
 		move_up(cub->player, cub->map, cub->mlx);
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_A))
@@ -197,8 +197,8 @@ int	main(int argc, char **argv)
 	// printf("angle: %.3f\n", cub->player->angle);
 	// print_map(cub->map); // for debuging
 
-	mlx_key_hook(cub.mlx, &my_keyhook, &cub);
-	mlx_loop_hook(cub.mlx, (void *)draw, &cub);
+	mlx_loop_hook(cub.mlx, (void *)my_keyhook, &cub);
+	mlx_loop_hook(cub.mlx, (void *)render, &cub);
 	mlx_loop(cub.mlx);
 	cub_destroy(&cub);
 	system("leaks cub3D");

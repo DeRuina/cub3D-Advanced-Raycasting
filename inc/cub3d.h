@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/12/07 16:02:10 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/12/07 17:17:27 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ typedef struct s_player
 	double	dir_y;
 	double	plane_x;
 	double	plane_y;
-	float	move_speed;
+	double	move_speed;
+	double	rot_speed;
+
 
 }				t_player;
 
@@ -113,7 +115,7 @@ void	dt_error(int err_no);
 void	store_map(char *line, t_map *map);
 int		store_map_params(char **line, t_map *map);
 // void	draw(void *param);
-void	draw(t_cub *cub);
+void	render(t_cub *cub);
 
 // parse_map.c
 int		is_player(char c);

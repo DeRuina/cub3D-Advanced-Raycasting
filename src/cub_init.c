@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:54:59 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/29 15:33:52 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/12/07 17:21:16 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ static t_player *init_player()
 	if (!player)
 		dt_error(MALLOC_FAIL);
 	ft_bzero(player, sizeof(t_player));
-	// player->speed = 2.0;
+	player->move_speed = 4.0;
+	player->rot_speed = 3.0;
 	return (player);
 }
 

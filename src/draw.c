@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:52:28 by tspoof            #+#    #+#             */
-/*   Updated: 2023/12/07 16:00:36 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/12/07 17:17:18 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	draw_walls(t_cub *cub)
 	}
 }
 
-void draw(t_cub *cub)
+void render(t_cub *cub)
 {
 	// t_cub *cub;
 
@@ -153,5 +153,5 @@ void draw(t_cub *cub)
 	// 	exit(0); // hehe_error
 	draw_background(cub);
 	draw_walls(cub);
-	cub->player->move_speed = cub->mlx->delta_time * 5.0;
+	// cub->player->move_speed = cub->mlx->delta_time * 5.0;
 }
