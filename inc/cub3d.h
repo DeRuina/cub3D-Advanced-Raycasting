@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/11/29 15:33:46 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/12/07 16:02:10 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 
 # define HEIGHT 1024
 # define WIDTH 1024
+# define TEX_W 64
+# define TEX_H 64
 
 typedef enum e_error
 {
@@ -93,20 +95,6 @@ typedef struct s_ray
 	int		draw_end;
 }				t_ray;
 
-
-typedef struct s_bres
-{
-	int	x0;
-	int	x1;
-	int	y0;
-	int	y1;
-	int	delta_x;
-	int	delta_y;
-	int	sign_x;
-	int	sign_y;
-	int	err;
-}				t_bres;
-
 typedef struct s_cub
 {
 	t_map		*map;
@@ -130,11 +118,12 @@ void	draw(t_cub *cub);
 // parse_map.c
 int		is_player(char c);
 
-void	plot_line(t_bres bres, mlx_image_t *img, int start_color, int end_color);
-int		get_gradient(t_bres bres, int start_color, int end_color);
+// void	plot_line(t_bres bres, mlx_image_t *img, int start_color, int end_color);
+// int		get_gradient(t_bres bres, int start_color, int end_color);
 
 // float *vertical_ray(float ray_angle, t_player *player, t_map *map);
 // float *ray(int x, t_cub *cub);
-void	ray(int x, t_cub *cub);
+void	cast_ray(int x, t_cub *cub);
+void	draw_wall(int x, t_cub *cub);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:52:28 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/29 15:34:32 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/12/07 16:00:36 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,8 @@ void	draw_walls(t_cub *cub)
 	x = 0;
 	while (x < WIDTH)
 	{
-		ray(x, cub);
+		cast_ray(x, cub);
+		draw_wall(x, cub);
 		x++;
 	}
 }
@@ -141,7 +142,6 @@ void	draw_walls(t_cub *cub)
 void draw(t_cub *cub)
 {
 	// t_cub *cub;
-
 
 	// cub = param;
 	ft_memset(cub->image->pixels, 0, (cub->image->width * cub->image->height) * sizeof(int32_t));
