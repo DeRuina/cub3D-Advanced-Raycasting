@@ -3,7 +3,7 @@ EA textures/test/EA.png
 SO textures/test/SO.png
 WE textures/test/WE.png
 
-C 35,19,73
+C 255,0,0
 F 15,6,40
 
 111111111111111

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:52:28 by tspoof            #+#    #+#             */
-/*   Updated: 2023/12/07 17:17:18 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/12/08 10:26:56 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,18 @@ void draw_background(t_cub *cub)
 {
 	int i;
 	int j;
+	int color;
 
 	i = 0;
+	color = cub->map->cealing_color;
 	while (i < (int)cub->image->height)
 	{
 		j = 0;
 		while (j < (int)cub->image->width)
 		{
-			// do floor and ceiling
-			mlx_put_pixel(cub->image, j, i, 0xFF);
+			if (i > (int)cub->image->width / 2)
+				color = cub->map->floor_color;
+			mlx_put_pixel(cub->image, j, i, color);
 			j++;
 		}
 		i++;

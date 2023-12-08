@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   store_map_params.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:55:56 by druina            #+#    #+#             */
-/*   Updated: 2023/11/08 13:17:09 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/12/08 10:26:49 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	get_color(char *line)
 	}
 	if (i < 3)
 		dt_error(INVALID_COLOR);
-	result = get_rgba(rgb[0], rgb[1], rgb[2], 1);
+	result = get_rgba(rgb[0], rgb[1], rgb[2], 255);
 	free_2d(tmp);
 	return (result);
 }
