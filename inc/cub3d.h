@@ -6,7 +6,7 @@
 /*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/12/08 13:27:38 by druina           ###   ########.fr       */
+/*   Updated: 2023/12/08 14:30:44 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,26 @@ int					is_player(char c);
 void				render(t_cub *cub);
 void				cast_ray(int x, t_cub *cub);
 void				draw_wall(int x, t_cub *cub);
+
+void				move_up(t_player *player, t_map *map, mlx_t *mlx);
+void				move_left(t_player *player, t_map *map, mlx_t *mlx);
+void				move_down(t_player *player, t_map *map, mlx_t *mlx);
+void				move_right(t_player *player, t_map *map, mlx_t *mlx);
+
+void				set_north(t_player *player);
+void				set_south(t_player *player);
+void				set_west(t_player *player);
+void				set_east(t_player *player);
+void				set_player_angle(char c, t_player *player);
+
+int					valid_colors(t_map *map);
+int					valid_textures(t_map *map);
+int					is_edge(int j, int x_max, int i, int y_max);
+void				count_player(int *player_count);
+
+void				check_validity(t_map *map);
+int					is_player(char c);
+int					check_row(char **rows, int i, int j, int len);
+int					valid_map(t_map *map);
 
 #endif

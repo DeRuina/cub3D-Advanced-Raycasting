@@ -6,7 +6,7 @@
 /*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:55:56 by druina            #+#    #+#             */
-/*   Updated: 2023/12/08 13:48:14 by druina           ###   ########.fr       */
+/*   Updated: 2023/12/08 14:34:40 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static mlx_texture_t	*get_texture(char *line)
 	return (result);
 }
 
-// checks that the number is between 0 and 255
 static int	convert_color_value_to_int(char *value)
 {
 	int	result;
@@ -75,7 +74,6 @@ static int	get_color(char *line)
 	return (result);
 }
 
-// checks which functions should be called
 int	store_map_params(char **line, t_map *map)
 {
 	if (!ft_strncmp(*line, "SO ", 3) && !map->textures.so)
