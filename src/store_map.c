@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   store_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:55:42 by druina            #+#    #+#             */
-/*   Updated: 2023/11/06 15:17:28 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/12/08 13:49:42 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "cub3d.h"
 
@@ -31,9 +30,9 @@ static int	valid_map_chars(char *line)
 	return (1);
 }
 
-int is_only_nl(char *str)
+int	is_only_nl(char *str)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = ft_strtrim(str, " \t");
 	if (!tmp)
@@ -49,12 +48,12 @@ int is_only_nl(char *str)
 
 void	store_map(char *line, t_map *map)
 {
-	char *tmp;
+	char	*tmp;
 
 	if (!valid_map_chars(line))
 		dt_error(INVALID_MAP);
 	if (is_only_nl(line))
-		return;
+		return ;
 	tmp = ft_strdup(line);
 	if (!tmp)
 		dt_error(MALLOC_FAIL);

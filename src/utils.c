@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 15:19:15 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/15 13:04:00 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/12/08 13:50:01 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	dt_strerror(int err_no)
 		"Error: No player\n",
 		"Error: mlx failure\n"
 	};
+
 	ft_putstr_fd(dt_errors[err_no], 2);
 }
 

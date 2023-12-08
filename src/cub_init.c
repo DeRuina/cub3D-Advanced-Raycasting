@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   cub_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:54:59 by tspoof            #+#    #+#             */
-/*   Updated: 2023/12/07 17:21:16 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/12/08 13:29:53 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void hehe_errror(mlx_t *mlx)
+static void	hehe_errror(mlx_t *mlx)
 {
 	mlx_close_window(mlx);
 	ft_putstr_fd((char *)mlx_strerror(mlx_errno), 2);
 	dt_error(MLX_ERROR);
 }
 
-static t_map *init_map()
+static t_map	*init_map(void)
 {
-	t_map *map;
-	t_vec *map_vec;
+	t_map	*map;
+	t_vec	*map_vec;
 
 	map = malloc(sizeof(t_map));
 	if (!map)
@@ -44,9 +44,9 @@ static t_map *init_map()
 	return (map);
 }
 
-static t_player *init_player()
+static t_player	*init_player(void)
 {
-	t_player *player;
+	t_player	*player;
 
 	player = malloc(sizeof(t_player));
 	if (!player)
@@ -57,9 +57,9 @@ static t_player *init_player()
 	return (player);
 }
 
-static t_ray *init_ray()
+static t_ray	*init_ray(void)
 {
-	t_ray *ray;
+	t_ray	*ray;
 
 	ray = malloc(sizeof(t_ray));
 	if (!ray)
@@ -68,9 +68,9 @@ static t_ray *init_ray()
 	return (ray);
 }
 
-t_cub cub_init()
+t_cub	cub_init(void)
 {
-	t_cub cub;
+	t_cub	cub;
 
 	cub.map = init_map();
 	cub.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", false);

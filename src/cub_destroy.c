@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub_destroy.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:53:21 by tspoof            #+#    #+#             */
-/*   Updated: 2023/11/29 13:10:19 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/12/08 13:29:28 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	destroy_map(t_map *map)
 {
-	char **map_rows;
+	char	**map_rows;
 	size_t	i;
 
 	if (map->textures.ea)
@@ -40,24 +40,24 @@ static void	destroy_map(t_map *map)
 	map = NULL;
 }
 
-static void destroy_player(t_player *player)
+static void	destroy_player(t_player *player)
 {
 	free(player);
 	player = NULL;
 }
 
-static void destroy_ray(t_ray *ray)
+static void	destroy_ray(t_ray *ray)
 {
 	free(ray);
 	ray = NULL;
 }
 
-void cub_destroy(t_cub *cub)
+void	cub_destroy(t_cub *cub)
 {
 	destroy_map(cub->map);
 	destroy_player(cub->player);
 	destroy_ray(cub->ray);
 	mlx_delete_image(cub->mlx, cub->image);
 	mlx_terminate(cub->mlx);
-	exit (0);
+	exit(0);
 }

@@ -6,10 +6,9 @@
 /*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:55:56 by druina            #+#    #+#             */
-/*   Updated: 2023/12/08 10:26:49 by druina           ###   ########.fr       */
+/*   Updated: 2023/12/08 13:48:14 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "cub3d.h"
 
@@ -21,7 +20,7 @@ static void	mlx_error(void)
 
 static mlx_texture_t	*get_texture(char *line)
 {
-	char	*tmp;
+	char			*tmp;
 	mlx_texture_t	*result;
 
 	tmp = ft_strtrim(line, " \t\n");
@@ -35,9 +34,9 @@ static mlx_texture_t	*get_texture(char *line)
 }
 
 // checks that the number is between 0 and 255
-static int convert_color_value_to_int(char *value)
+static int	convert_color_value_to_int(char *value)
 {
-	int result;
+	int	result;
 
 	value = ft_strtrim(value, " \t");
 	if (!value)
