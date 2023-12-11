@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:59:39 by tspoof            #+#    #+#             */
-/*   Updated: 2023/12/11 15:17:09 by druina           ###   ########.fr       */
+/*   Updated: 2023/12/11 16:34:02 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	ray_calculations(t_ray *r)
+static void	ray(t_ray *r)
 {
 	if (r->side == 0)
 		r->perp_wall_dist = (r->side_dist_x - r->delta_dist_x);
@@ -29,6 +29,7 @@ static void	ray_calculations(t_ray *r)
 
 static void	perform_dda(t_ray *r, t_map *map)
 {
+	r->hit = 0;
 	while (r->hit == 0)
 	{
 		if (r->side_dist_x < r->side_dist_y)
@@ -43,12 +44,17 @@ static void	perform_dda(t_ray *r, t_map *map)
 			r->map_y += r->step_y;
 			r->side = 1;
 		}
+		if (r->map_y < 0
+			|| r->map_y >= map->max_height
+			|| r->map_x < 0
+			|| r->map_x >= (int)ft_strlen(((char **)map->map->memory)[r->map_y]))
+			break;
 		if (((char **)map->map->memory)[r->map_y][r->map_x] == '1')
 			r->hit = 1;
 	}
 }
 
-static void	claculate_step_and_side_step(t_ray *r, t_player *player)
+static void	step_and_side_dist(t_ray *r, t_player *player)
 {
 	if (r->ray_dir_x < 0)
 	{
@@ -72,14 +78,13 @@ static void	claculate_step_and_side_step(t_ray *r, t_player *player)
 	}
 }
 
-static void	basic_ray_calculations(t_ray *r, t_player *player, int x)
+static void	delta_distance(t_ray *r, t_player *player, int x)
 {
 	r->camera_x = 2 * x / (double)WIDTH - 1;
 	r->ray_dir_x = player->dir_x + player->plane_x * r->camera_x;
 	r->ray_dir_y = player->dir_y + player->plane_y * r->camera_x;
 	r->map_x = (int)player->x;
 	r->map_y = (int)player->y;
-	r->hit = 0;
 	if (r->ray_dir_x == 0)
 		r->delta_dist_x = 1e30;
 	else
@@ -101,8 +106,8 @@ void	cast_ray(int x, t_cub *cub)
 	player = cub->player;
 	map = cub->map;
 	image = cub->image;
-	basic_ray_calculations(r, player, x);
-	claculate_step_and_side_step(r, player);
+	delta_distance(r, player, x);
+	step_and_side_dist(r, player);
 	perform_dda(r, map);
-	ray_calculations(r);
+	ray(r);
 }
