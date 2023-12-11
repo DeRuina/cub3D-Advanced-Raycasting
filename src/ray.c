@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 12:59:39 by tspoof            #+#    #+#             */
-/*   Updated: 2023/12/11 16:34:02 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/12/11 16:38:52 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ static void	ray(t_ray *r)
 
 static void	perform_dda(t_ray *r, t_map *map)
 {
+	char	**map_memory;
+
+	map_memory = (char **)map->map->memory;
 	r->hit = 0;
 	while (r->hit == 0)
 	{
@@ -44,11 +47,9 @@ static void	perform_dda(t_ray *r, t_map *map)
 			r->map_y += r->step_y;
 			r->side = 1;
 		}
-		if (r->map_y < 0
-			|| r->map_y >= map->max_height
-			|| r->map_x < 0
-			|| r->map_x >= (int)ft_strlen(((char **)map->map->memory)[r->map_y]))
-			break;
+		if (r->map_y < 0 || r->map_y >= map->max_height || r->map_x < 0
+			|| r->map_x >= (int)ft_strlen(map_memory[r->map_y]))
+			break ;
 		if (((char **)map->map->memory)[r->map_y][r->map_x] == '1')
 			r->hit = 1;
 	}
