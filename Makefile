@@ -17,7 +17,7 @@ ARFLAGS		= rcs
 SRC 		= \
 $S/main.c	$S/parse_map.c	$S/mlx_colors.c	$S/utils.c $S/store_map_params.c $S/store_map.c \
 $S/draw.c	$S/cub_init.c	$S/cub_destroy.c $S/moves.c $S/player_angle.c $S/parse_map_utils.c \
-$S/ray.c $S/map_validity.c
+$S/ray.c $S/map_validity.c $S/draw_ray.c
 
 OBJ			= $(SRC:$S%=$O%.o)
 
