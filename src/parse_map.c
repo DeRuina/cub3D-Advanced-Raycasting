@@ -6,7 +6,7 @@
 /*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 14:31:07 by tspoof            #+#    #+#             */
-/*   Updated: 2023/12/08 14:34:21 by druina           ###   ########.fr       */
+/*   Updated: 2023/12/12 10:54:56 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,20 @@ static void	get_map(int fd, t_map *map)
 	char	*line;
 
 	line = NULL;
+	if (handle_empty_lines(fd, &line) == 2)
+		dt_error(INVALID_MAP);
 	while (1)
 	{
+		if (store_map(line, map))
+			break ;
+		free(line);
+		line = NULL;
 		line = get_next_line(fd);
 		if (line == NULL)
 			return ;
-		store_map(line, map);
-		free(line);
-		line = NULL;
 	}
+	if (handle_empty_lines(fd, &line) == 1)
+		dt_error(INVALID_MAP);
 }
 
 static void	get_params(int fd, t_map *map)

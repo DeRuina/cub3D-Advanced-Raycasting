@@ -6,7 +6,7 @@
 /*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:55:42 by druina            #+#    #+#             */
-/*   Updated: 2023/12/08 13:49:42 by druina           ###   ########.fr       */
+/*   Updated: 2023/12/12 10:55:45 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,37 @@ int	is_only_nl(char *str)
 	return (0);
 }
 
-void	store_map(char *line, t_map *map)
+int	handle_empty_lines(int fd, char	**line)
+{
+	while (1)
+	{
+		*line = get_next_line(fd);
+		if (*line == NULL)
+			return (2);
+		if (ft_strncmp(*line, "\n", 1))
+			return (1);
+		free(*line);
+		*line = NULL;
+	}
+	return (0);
+}
+
+int	store_map(char *line, t_map *map)
 {
 	char	*tmp;
 
 	if (!valid_map_chars(line))
 		dt_error(INVALID_MAP);
 	if (is_only_nl(line))
-		return ;
+	{
+		free(line);
+		line = NULL;
+		return (1);
+	}
 	tmp = ft_strdup(line);
 	if (!tmp)
 		dt_error(MALLOC_FAIL);
 	if (vec_push(map->map, &tmp) < 0)
 		dt_error(MALLOC_FAIL);
+	return (0);
 }

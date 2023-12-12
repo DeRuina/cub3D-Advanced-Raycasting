@@ -6,7 +6,7 @@
 /*   By: druina <druina@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 10:05:09 by druina            #+#    #+#             */
-/*   Updated: 2023/12/08 14:30:44 by druina           ###   ########.fr       */
+/*   Updated: 2023/12/12 10:56:06 by druina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,10 @@ void				cub_destroy(t_cub *cub);
 
 int					parse_map(char *path, t_cub *cub);
 void				dt_error(int err_no);
-void				store_map(char *line, t_map *map);
+int					store_map(char *line, t_map *map);
 int					store_map_params(char **line, t_map *map);
 int					is_player(char c);
+int					handle_empty_lines(int fd, char **line);
 
 void				render(t_cub *cub);
 void				cast_ray(int x, t_cub *cub);
