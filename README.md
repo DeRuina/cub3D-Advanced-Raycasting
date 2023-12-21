@@ -2,6 +2,8 @@
 
 cub3D is a 3D game engine inspired by the classic game Wolfenstein 3D. It is designed to render a maze-like environment and simulate a first-person perspective, providing an immersive gaming experience.
 
+
+
 ![game_image](textures/README_IMG/1.png)
 
 
@@ -12,6 +14,8 @@ cub3D is a 3D game engine inspired by the classic game Wolfenstein 3D. It is des
 - Collision detection to prevent walking through walls.
 - Customizable map system for creating unique mazes.
 - Support for texture mapping to enhance visual appeal.
+
+![game_image](textures/README_IMG/2.png)
 
 ## Getting Started
 
