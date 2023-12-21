@@ -1,4 +1,3 @@
-![](textures/README_IMG/3.png)
 
 # cub3D
 
@@ -17,7 +16,6 @@ cub3D is a 3D game engine inspired by the classic game Wolfenstein 3D. It is des
 - Customizable map system for creating unique mazes.
 - Support for texture mapping to enhance visual appeal.
 
-![game_image](textures/README_IMG/2.png)
 
 ## Getting Started
 
@@ -60,6 +58,9 @@ After building the project, you can run the game engine with the following comma
 ## Custom Maps
 
 You can create your own maps by editing the map files in the `maps` directory. Refer to the map documentation for the format and guidelines.
+
+![game_image](textures/README_IMG/3.png)
+![game_image](textures/README_IMG/2.png)
 
 ## Acknowledgments
 
