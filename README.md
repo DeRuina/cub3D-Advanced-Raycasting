@@ -59,8 +59,8 @@ After building the project, you can run the game engine with the following comma
 
 You can create your own maps by editing the map files in the `maps` directory. Refer to the map documentation for the format and guidelines.
 
-![game_image](textures/README_IMG/3.png)
 ![game_image](textures/README_IMG/1.png)
+![game_image](textures/README_IMG/3.png)
 
 ## Acknowledgments
 
