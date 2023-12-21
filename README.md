@@ -1,11 +1,11 @@
 
-# cub3D
+# cub3D - Advanced Raycasting
 
 cub3D is a 3D game engine inspired by the classic game Wolfenstein 3D. It is designed to render a maze-like environment and simulate a first-person perspective, providing an immersive gaming experience.
 
 
 
-![game_image](textures/README_IMG/1.png)
+![game_image](textures/README_IMG/2.png)
 
 
 ## Features
@@ -60,7 +60,7 @@ After building the project, you can run the game engine with the following comma
 You can create your own maps by editing the map files in the `maps` directory. Refer to the map documentation for the format and guidelines.
 
 ![game_image](textures/README_IMG/3.png)
-![game_image](textures/README_IMG/2.png)
+![game_image](textures/README_IMG/1.png)
 
 ## Acknowledgments
 
